@@ -1,5 +1,6 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
+const central_node = require('./models/nodes');
 
 
 const app = express();
@@ -12,6 +13,14 @@ app.use('/static', express.static('public'));
 
 app.get('/', (req, res) => {
     res.render('index');
+});
+
+central_node.connect((err) => {
+    if (err) {
+      console.error('Error connecting to MySQL: ' + err.stack);
+      return;
+    }
+    console.log('Connected to MySQL as id ' + connection.threadId);
 });
 
 app.listen(8080, () => {
