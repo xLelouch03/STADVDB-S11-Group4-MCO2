@@ -1,10 +1,35 @@
+.top-container {
+    text-align: center;
+}
+
+.title-container {
+    background-color: #393737;
+    color: white;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
 .node-row {
-    margin-top: 30px;
+    margin-top: 30px !important;
     display: flex;
     flex-direction: row;
+    margin: auto;
+    width: 80%;
 }
 
 #subtext {
     font-weight: 400;
     font-size: 20px;
+}
+
+.node-title{
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.selector-container {
+    margin-top: 30px;
+}
+.form-select {
+    width: 10%;
+    margin: auto;
 }
