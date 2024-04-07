@@ -25,6 +25,18 @@ app.get('/data', (req, res) => {
         });
 });
 
+app.get('/api/nodeStatus', async (req, res) => {
+    try {
+        const node1Connected = await node_functions.test_connection(1);
+        const node2Connected = await node_functions.test_connection(2);
+        const node3Connected = await node_functions.test_connection(3);
+
+        res.json({ node1Connected, node2Connected, node3Connected });
+    } catch (error) {
+        console.error('Error fetching node status:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
 
 
 app.get('/viewtable', (req, res) => {
@@ -32,6 +44,6 @@ app.get('/viewtable', (req, res) => {
     res.render('viewtable')
 });
 
-app.listen(8080, () => {
+app.listen(8000, () => {
     console.log('Server is running on port 8080');
 });

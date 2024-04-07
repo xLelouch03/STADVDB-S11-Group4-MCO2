@@ -56,8 +56,11 @@ const node_functions = {
         try {
             await selectedNode.query('SELECT 1')
             console.log(`Connected to node ${node}`);
+            return true;
         } catch (error) {
-            console.error(`Error connecting to node ${node}:`, error);
+            console.log(`Node ${node} is offline`);
+            //console.error(`Error connecting to node ${node}:`, error);
+            return false;
         }
     },
 
