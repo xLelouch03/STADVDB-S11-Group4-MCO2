@@ -88,8 +88,33 @@ const node_functions = {
             console.error('Error querying node:', error);
             return null
         }
-    }
+    },
 
+    // get single connection for transactions
+    async get_single_connection(node) {
+        let selectedNode;
+        switch (node) {
+            case 1:
+                selectedNode = node1;
+                break;
+            case 2:
+                selectedNode = node2;
+                break;
+            case 3:
+                selectedNode = node3;
+                break;
+            default:
+                console.log('Invalid node');
+                return;
+        }
+        try {
+            return await selectedNode.getConnection();
+        }
+        catch (error) {
+            console.error('Error getting connection:', error);
+            return null;
+        }
+    }
 };
 
 module.exports = node_functions;
