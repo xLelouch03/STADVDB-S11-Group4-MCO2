@@ -1,57 +1,42 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" href="/static/css/viewtable.css">
 
-<table id="example" class="display compact" style="width:100%">
-    <thead>
-        <tr>
-             <th>pxid</th>
-            <th>clinicid</th>
-            <th>doctorid</th>
-            <th>apptid</th>
-            <th>status</th>
-            <th>TimeQueued</th>
-            <th>QueueDate</th>
-            <th>StartTime</th>
-            <th>EndTime</th>
-            <th>type</th>
-            <th>Virtual</th>
-            <th>mainspecialty</th>
-            <th>hospitalname</th>
-            <th>IsHospital</th>
-            <th>City</th>
-            <th>Province</th>
-            <th>RegionName</th>
-            <th>patient_age</th>
-            <th>patient_gender</th>
-        </tr>
-    </thead>
-    <tbody>
-        <!-- Table data goes here -->
-    </tbody>
-    <tfoot>
-        <tr>
-            <th>pxid</th>
-            <th>clinicid</th>
-            <th>doctorid</th>
-            <th>apptid</th>
-            <th>status</th>
-            <th>TimeQueued</th>
-            <th>QueueDate</th>
-            <th>StartTime</th>
-            <th>EndTime</th>
-            <th>type</th>
-            <th>Virtual</th>
-            <th>mainspecialty</th>
-            <th>hospitalname</th>
-            <th>IsHospital</th>
-            <th>City</th>
-            <th>Province</th>
-            <th>RegionName</th>
-            <th>patient_age</th>
-            <th>patient_gender</th>
-        </tr>
-    </tfoot>
-</table>
+<div class="top-container">
+    <div class="title-container">
+        <h1>Appointments</h1>
+    </div>
+</div>
+<div class="table-container">
+    <table id="example" class="display compact" style="width:100%">
+        <thead>
+            <tr>
+                <th>pxid</th>
+                <th>clinicid</th>
+                <th>doctorid</th>
+                <th>apptid</th>
+                <th>status</th>
+                <th>TimeQueued</th>
+                <th>QueueDate</th>
+                <th>StartTime</th>
+                <th>EndTime</th>
+                <th>type</th>
+                <th>IsVirtual</th>
+                <th>mainspecialty</th>
+                <th>hospitalname</th>
+                <th>IsHospital</th>
+                <th>City</th>
+                <th>Province</th>
+                <th>RegionName</th>
+                <th>patient_age</th>
+                <th>patient_gender</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Table data goes here -->
+        </tbody>
+    </table>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>

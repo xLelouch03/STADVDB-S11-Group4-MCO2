@@ -1,6 +1,27 @@
+.table-container {
+    width: 80%; /* Set the desired width */
+    margin: auto; /* Center the container */
+}
+
 #example {
     border-collapse: collapse;
-    width: 100%;
+}
+
+.top-container {
+    text-align: center;
+}
+
+.title-container {
+    background-color: #393737;
+    color: white;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+
+#subtext {
+    font-weight: 400;
+    font-size: 20px;
 }
 
 #example th,

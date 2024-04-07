@@ -15,15 +15,16 @@ app.get('/', (req, res) => {
 });
 
 app.get('/data', (req, res) => {
-    node1.query('SELECT * FROM appointments', (err, results) => {
-        if (err) {
-            console.error('Error querying MySQL: ' + err.stack);
+    node_functions.query_node(1, 'SELECT * FROM appointments')
+        .then(results => {
+            res.json({ data: results });
+        })
+        .catch(error => {
+            console.error('Error querying MySQL:', error);
             res.status(500).json({ error: 'Error querying MySQL' });
-            return;
-        }
-        res.json({ data: results });
-    });
+        });
 });
+
 
 
 app.get('/viewtable', (req, res) => {
@@ -34,6 +35,3 @@ app.get('/viewtable', (req, res) => {
 app.listen(8080, () => {
     console.log('Server is running on port 8080');
 });
-
-node_functions.test_connection(1)
-console.log(node_functions.query_node(1, 'SELECT * FROM appointments'))
