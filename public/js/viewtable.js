@@ -29,7 +29,8 @@ $(document).ready(function() {
             { "data": "Province" },
             { "data": "RegionName" },
             { "data": "patient_age" },
-            { "data": "patient_gender" }
+            { "data": "patient_gender" },
+            { "data": "Location" }
         ]
     });
 });
