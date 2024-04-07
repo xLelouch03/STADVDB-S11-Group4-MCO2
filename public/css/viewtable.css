@@ -1,0 +1,23 @@
+#example {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#example th,
+#example td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+#example th {
+    background-color: #f2f2f2;
+}
+
+#example tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#example tbody tr:hover {
+    background-color: #ddd;
+}
