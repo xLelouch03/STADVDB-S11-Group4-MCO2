@@ -6,7 +6,10 @@ const node1 = mysql.createPool({
     password: 'F2qmexnhkb8GYjENHB5zyJaV',
     database: 'mco2',
     port: 20144,
-    waitForConnections: true
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0,
+    connectTimeout: 5000
 });
 
 const node2 = mysql.createPool({
@@ -15,7 +18,10 @@ const node2 = mysql.createPool({
     password: 'F2qmexnhkb8GYjENHB5zyJaV',
     database: 'mco2',
     port: 20145,
-    waitForConnections: true
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0,
+    connectTimeout: 5000
 });
 
 const node3 = mysql.createPool({
@@ -24,7 +30,10 @@ const node3 = mysql.createPool({
     password: 'F2qmexnhkb8GYjENHB5zyJaV',
     database: 'mco2',
     port: 20146,
-    waitForConnections: true
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0,
+    connectTimeout: 5000
 });
 
 const node_functions = {
