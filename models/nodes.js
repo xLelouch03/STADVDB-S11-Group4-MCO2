@@ -1,169 +1,83 @@
-const { query } = require('express');
-const mysql = require('mysql2');
+const mysql = require('mysql2/promise');
 
-const node1 = mysql.createConnection({
+const node1 = mysql.createPool({
     host: 'ccscloud.dlsu.edu.ph',
     user: 'root',
     password: 'F2qmexnhkb8GYjENHB5zyJaV',
     database: 'mco2',
-    port: 20144
+    port: 20144,
+    waitForConnections: true
 });
 
-const node2 = mysql.createConnection({
+const node2 = mysql.createPool({
     host: 'ccscloud.dlsu.edu.ph',
     user: 'root',
     password: 'F2qmexnhkb8GYjENHB5zyJaV',
     database: 'mco2',
-    port: 20145
+    port: 20145,
+    waitForConnections: true
 });
 
-const node3 = mysql.createConnection({
+const node3 = mysql.createPool({
     host: 'ccscloud.dlsu.edu.ph',
     user: 'root',
     password: 'F2qmexnhkb8GYjENHB5zyJaV',
     database: 'mco2',
-    port: 20146
+    port: 20146,
+    waitForConnections: true
 });
 
-node_functions = {
-    async connect_nodes() {
-        await node1.connect((err) => {
-    	    if (err) {
-                console.log('Error connecting to node 1');
-                return;
-            }
-            console.log('Connected to node 1');
-         });
-
-        await node2.connect((err) => {
-            if (err) {
-                console.log('Error connecting to node 2');
-                 return;
-            }
-                console.log('Connected to node 2');
-        });
-
-        await node3.connect((err) => {
-            if (err) {
-                console.log('Error connecting to node 3');
-                return;
-            }
-            console.log('Connected to node 3');
-        }); 
-    },
-
-    async test_connection(node) {
+const node_functions = {
+    async test_connection(node){
+        let selectedNode;
         switch (node) {
             case 1:
-                await node1.ping((err) => {
-                    if (err) {
-                        console.log('Node 1 is offline');
-                        return false;
-                    }
-                    console.log('Node 1 is online');
-                    return true
-                });
+                selectedNode = node1;
                 break;
             case 2:
-                await node2.ping((err) => {
-                    if (err) {
-                        console.log('Node 2 is offline');
-                        return false;
-                    }
-                    console.log('Node 2 is online');
-                    return true
-                });
+                selectedNode = node2;
                 break;
             case 3:
-                await node3.ping((err) => {
-                    if (err) {
-                        console.log('Node 3 is offline');
-                        return false;
-                    }
-                    console.log('Node 3 is online');
-                    return true
-                });
+                selectedNode = node3;
                 break;
             default:
                 console.log('Invalid node');
-                break;
+                return;
+        }
+        try {
+            await selectedNode.query('SELECT 1')
+            console.log(`Connected to node ${node}`);
+        } catch (error) {
+            console.error(`Error connecting to node ${node}:`, error);
         }
     },
 
-    async disconnect_node(node) {
+    async query_node(node, query) {
+        let selectedNode;
         switch (node) {
             case 1:
-                await node1.end((err) => {
-                    if (err) {
-                        console.log('Error disconnecting from node 1');
-                        return;
-                    }
-                    console.log('Disconnected from node 1');
-                });
+                selectedNode = node1;
                 break;
             case 2:
-                await node2.end((err) => {
-                    if (err) {
-                        console.log('Error disconnecting from node 2');
-                        return;
-                    }
-                    console.log('Disconnected from node 2');
-                });
+                selectedNode = node2;
                 break;
             case 3:
-                await node3.end((err) => {
-                    if (err) {
-                        console.log('Error disconnecting from node 3');
-                        return;
-                    }
-                    console.log('Disconnected from node 3');
-                });
+                selectedNode = node3;
                 break;
             default:
                 console.log('Invalid node');
-                break;
+                return;
         }
-    },
-
-    query_node(node, query) {
-        return new Promise((resolve, reject) => {
-            switch (node) {
-                case 1:
-                    node1.query(query, (err, results, fields) => {
-                        if (err) {
-                            console.log('Error querying node 1');
-                            reject(err);
-                        }
-                        console.log('Query successful');
-                        resolve(results);
-                    });
-                    break;
-                case 2:
-                    node2.query(query, (err, results, fields) => {
-                        if (err) {
-                            console.log('Error querying node 2');
-                            reject(err);
-                        }
-                        console.log('Query successful');
-                        resolve(results);
-                    });
-                    break;
-                case 3:
-                    node3.query(query, (err, results, fields) => {
-                        if (err) {
-                            console.log('Error querying node 3');
-                            reject(err);
-                        }
-                        console.log('Query successful');
-                        resolve(results);
-                    });
-                    break;
-                default:
-                    console.log('Invalid node');
-                    break;
-            }
-        });
+        try {
+            const [rows, fields] = await selectedNode.query(query)
+            console.log(rows);
+            return rows;
+        } catch (error) {
+            console.error('Error querying node:', error);
+            return null
+        }
     }
+
 };
 
 module.exports = node_functions;
