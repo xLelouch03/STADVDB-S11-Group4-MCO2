@@ -1,7 +1,6 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
-const central_node = require('./models/nodes');
-
+const node_functions = require('./models/nodes');
 
 const app = express();
 
@@ -16,34 +15,25 @@ app.get('/', (req, res) => {
 });
 
 app.get('/data', (req, res) => {
-    const data = [
-        { "name": "Tiger Nixon", "position": "System Architect", "office": "Edinburgh", "age": "61", "start_date": "2011/04/25", "salary": "$320,800" },
-        { "name": "Garrett Winters", "position": "Accountant", "office": "Tokyo", "age": "63", "start_date": "2011/07/25", "salary": "$170,750" }
-    ];
-    res.json({ data });
+    node1.query('SELECT * FROM appointments', (err, results) => {
+        if (err) {
+            console.error('Error querying MySQL: ' + err.stack);
+            res.status(500).json({ error: 'Error querying MySQL' });
+            return;
+        }
+        res.json({ data: results });
+    });
 });
 
 
 app.get('/viewtable', (req, res) => {
     
-    res.render('viewtable');
-    // central_node.query('SELECT * FROM appointments', (err, results) => {
-    //     if (err) {
-    //         console.error('Error querying MySQL: ' + err.stack);
-    //         return;
-    //     }
-    //     res.render('viewtable', {appointments: results});
-    // });
-});
-
-central_node.connect((err) => {
-    if (err) {
-      console.error('Error connecting to MySQL: ' + err.stack);
-      return;
-    }
-    console.log('Connected to MySQL as id ');
+    res.render('viewtable')
 });
 
 app.listen(8080, () => {
     console.log('Server is running on port 8080');
 });
+
+node_functions.connect_nodes();
+console.log(node_functions.query_node(1, 'SELECT * FROM appointments'))
