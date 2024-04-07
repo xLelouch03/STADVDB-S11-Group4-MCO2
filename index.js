@@ -1,7 +1,6 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
-const central_node = require('./models/nodes');
-
+const node_functions = require('./models/nodes');
 
 const app = express();
 
@@ -15,14 +14,9 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
-central_node.connect((err) => {
-    if (err) {
-      console.error('Error connecting to MySQL: ' + err.stack);
-      return;
-    }
-    console.log('Connected to MySQL as id ');
-});
-
 app.listen(8080, () => {
     console.log('Server is running on port 8080');
 });
+
+node_functions.connect_nodes();
+console.log(node_functions.query_node(1, 'SELECT * FROM appointments'))
