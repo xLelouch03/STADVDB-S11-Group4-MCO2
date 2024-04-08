@@ -3,6 +3,7 @@ const controller = {
     renderInitial: async function (req,res){
         res.render('index');
     },
+
     nodeStatus: async function (req,res){
         try {
             const node1Connected = await node_functions.test_connection(1);
@@ -15,9 +16,11 @@ const controller = {
             res.status(500).json({ error: 'Internal server error' });
         }
     },
+
     viewTable: async function (req,res){
         res.render('viewtable')
     },
+    
     getData: async function(req,res){
         node_functions.query_node(1, 'SELECT * FROM appointments')
         .then(results => {
