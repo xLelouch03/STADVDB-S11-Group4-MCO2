@@ -7,6 +7,8 @@ app.get('/data', controller.getData);
 app.get ('/api/nodeStatus', controller.nodeStatus);
 app.get('/viewtable', controller.viewTable);
 app.get('/create', controller.create)
+app.post('/create', controller.postCreate)
+app.get('/select', controller.select)
 
 
 // app.get('/devMenu', controller.getDevMenu);

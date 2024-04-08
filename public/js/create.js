@@ -30,6 +30,28 @@ document.querySelector('form').addEventListener('submit', function(event) {
     // Write JSON data to a file (You may need server-side code to handle this)
     console.log(jsonData);
 
+    fetch('/create', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: jsonData,
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Success:', data);
+        // Optionally, perform any action after successful submission
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Optionally, handle errors
+    });
+    
     document.querySelector('form').reset();
 
 });

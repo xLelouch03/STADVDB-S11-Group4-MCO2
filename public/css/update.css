@@ -1,17 +1,26 @@
-.create-container {
-    width: 80%; 
-    margin: auto; 
+.update-container {
+    width: 80%;
+    margin: auto;
     margin-top: 40px;
+    align-items: center;
+}
+
+form {
+    width: 100%; /* Make the form take full width */
+}
+
+.form-group {
+    width: 100%; /* Make form group take full width */
 }
 
 .home-btn {
     position: absolute;
-    top: 25%; 
+    top: 25%;
     left: 10%;
     color: white;
     text-decoration: none;
     padding: 5px 10px;
-    background-color: #333; 
+    background-color: #333;
     border-radius: 5px;
 }
 
@@ -27,20 +36,15 @@
     padding-bottom: 15px;
 }
 
-
 #subtext {
     font-weight: 400;
     font-size: 20px;
 }
 
 .marg {
-    margin-top: 15px;
+    margin-top: 20px;
 }
 
-.marg-bot {
-    margin-bottom: 30px;
-}
-
-.full-width-btn {
+.full-width {
     width: 100%;
 }

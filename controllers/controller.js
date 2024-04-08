@@ -44,6 +44,14 @@ const controller = {
         res.render('create')
     },
     
+    select: async function (req,res){
+        res.render('select')
+    },
+
+    update: async function (req,res){
+        res.render('update')
+    },
+
     getData: async function(req,res){
         node_functions.query_node(primaryNode, 'SELECT * FROM appointments')
         .then(results => {
@@ -53,6 +61,10 @@ const controller = {
             console.error('Error querying MySQL:', error);
             res.status(500).json({ error: 'Error querying MySQL' });
         });
-    }
+    },
+
+    postCreate: async function(req,res){
+       console.log("here");
+    },
 }
 module.exports = controller;
