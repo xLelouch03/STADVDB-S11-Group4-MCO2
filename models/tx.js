@@ -59,7 +59,7 @@ const tx_funcs = {
                     return result;
                 }
                 catch (error) {
-                    console.error('Error inserting transaction:', error);
+                    console.error('Error updating transaction:', error);
                     console.log('Rolled back data');
                     conn.rollback();
                     conn.release();
