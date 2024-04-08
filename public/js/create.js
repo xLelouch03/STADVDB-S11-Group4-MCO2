@@ -1,7 +1,6 @@
 document.querySelector('form').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent form submission
+    event.preventDefault(); 
     
-    // Get form data
     var formData = {
         PxID: document.querySelectorAll('.form-control')[1].value,
         ClinicID: document.querySelectorAll('.form-control')[2].value,
@@ -24,10 +23,8 @@ document.querySelector('form').addEventListener('submit', function(event) {
         PatientGender: document.querySelector('#pxgender').value,
     };
 
-    // Convert form data to JSON
     var jsonData = JSON.stringify(formData);
 
-    // Write JSON data to a file (You may need server-side code to handle this)
     console.log(jsonData);
 
     fetch('/create', {
@@ -42,14 +39,6 @@ document.querySelector('form').addEventListener('submit', function(event) {
             throw new Error('Network response was not ok');
         }
         return response.json();
-    })
-    .then(data => {
-        console.log('Success:', data);
-        // Optionally, perform any action after successful submission
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        // Optionally, handle errors
     });
     
     document.querySelector('form').reset();
