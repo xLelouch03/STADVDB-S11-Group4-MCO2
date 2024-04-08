@@ -77,7 +77,6 @@ const controller = {
             });
     },
     
-
     postCreate: async function(req, res){
         try {
             console.log('in controller');

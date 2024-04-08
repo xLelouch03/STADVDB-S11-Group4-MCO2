@@ -14,35 +14,54 @@ document.querySelector('form').addEventListener('submit', function(event) {
         island = 'Mindanao';
     }
     else island = '';
+    let virtual;
+    if (document.querySelector('#virtual').value == 'True') {
+        virtual = 1;
+    }
+    else if (document.querySelector('#virtual').value == 'False') {
+        virtual = 0;
+    }
+    else virtual = null;
+
+    function return_null(value) {
+        if (value == 'Choose...') {
+            return null;
+        }
+        if (value == '') {
+            return null;
+        }
+        else return "'" + value + "'";
+    }
+    
+    function return_null_int(value) {
+        if (value == '') {
+            return null;
+        }
+        else return value;
+    }
     
     var formData = {
-        pxid: document.querySelectorAll('.form-control')[1].value,
-        clinicid: document.querySelectorAll('.form-control')[2].value,
-        doctorid: document.querySelectorAll('.form-control')[3].value,
-        apptid: document.querySelector('#apptid').value,
-        status: document.querySelector('#status').value,
-        TimeQueued: document.querySelector('#tq').value,
-        QueueDate: document.querySelector('#qd').value,
-        StartTime: document.querySelector('#st').value,
-        EndTime: document.querySelector('#et').value,
-        type: document.querySelector('#type').value,
-        IsVirtual: document.querySelector('#virtual').value,
-        mainspecialty: document.querySelector('#ms').value,
-        hospitalname: document.querySelector('#hn').value,
-        IsHospital: document.querySelector('#ishospital').value,
-        City: document.querySelector('#city').value,
-        Province: document.querySelector('#province').value,
+        pxid: return_null(document.querySelectorAll('.form-control')[1].value),
+        clinicid: return_null(document.querySelectorAll('.form-control')[2].value),
+        doctorid: return_null(document.querySelectorAll('.form-control')[3].value),
+        apptid: return_null(document.querySelector('#apptid').value),
+        status: return_null(document.querySelector('#status').value),
+        TimeQueued: return_null(document.querySelector('#tq').value),
+        QueueDate: return_null(document.querySelector('#qd').value),
+        StartTime: return_null(document.querySelector('#st').value),
+        EndTime: return_null(document.querySelector('#et').value),
+        type: return_null(document.querySelector('#type').value),
+        IsVirtual: virtual,
+        mainspecialty: return_null(document.querySelector('#ms').value),
+        hospitalname: return_null(document.querySelector('#hn').value),
+        IsHospital: return_null(document.querySelector('#ishospital').value),
+        City: return_null(document.querySelector('#city').value),
+        Province: return_null(document.querySelector('#province').value),
         RegionName: region,
-        patient_age: document.querySelector('#pxage').value,
-        patient_gender: document.querySelector('#pxgender').value,
+        patient_age: return_null_int(document.querySelector('#pxage').value),
+        patient_gender: return_null(document.querySelector('#pxgender').value),
         Location: island
     };
-
-    for (const key in formData) {
-        if (formData[key] == '') {
-            formData[key] = null;
-        }
-    }
 
     var jsonData = JSON.stringify(formData);
 
