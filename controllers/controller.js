@@ -1,3 +1,4 @@
+const node_functions = require('../models/nodes');
 const controller = {
     renderInitial: async function (req,res){
         res.render('index');
