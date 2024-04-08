@@ -102,5 +102,9 @@ const controller = {
                 res.status(500).json({ error: 'Error inserting data' });
         }
     },
+
+    delete: async function(req, res) {
+        console.log("herea!!")
+    }
 }
 module.exports = controller;

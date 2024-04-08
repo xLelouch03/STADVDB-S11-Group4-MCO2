@@ -11,6 +11,7 @@ app.post('/create', controller.postCreate)
 app.get('/update', controller.select)
 app.get('/update/:id', controller.update)
 app.get('/get/:id', controller.getOne)
+app.post('/delete/:id', controller.delete)
 
 
 // app.get('/devMenu', controller.getDevMenu);

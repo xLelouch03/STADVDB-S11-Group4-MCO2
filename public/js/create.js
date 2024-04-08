@@ -13,7 +13,8 @@ document.querySelector('form').addEventListener('submit', function(event) {
     else if(region == 'Region IX' || region == 'Region X' || region == 'Region XI' || region == 'Region XII' || region == 'Region XIII' || region == 'BARMM') {
         island = 'Mindanao';
     }
-    else island = '';
+    else island = null;
+
     let virtual;
     if (document.querySelector('#virtual').value == 'True') {
         virtual = 1;
@@ -24,10 +25,7 @@ document.querySelector('form').addEventListener('submit', function(event) {
     else virtual = null;
 
     function return_null(value) {
-        if (value == 'Choose...') {
-            return null;
-        }
-        if (value == '') {
+        if (value === 'Choose...' || value === '') {
             return null;
         }
         else return "'" + value + "'";
@@ -39,7 +37,8 @@ document.querySelector('form').addEventListener('submit', function(event) {
         }
         else return value;
     }
-    
+    console.log("Type value:", document.querySelector('#type').value);
+
     var formData = {
         pxid: return_null(document.querySelectorAll('.form-control')[1].value),
         clinicid: return_null(document.querySelectorAll('.form-control')[2].value),
@@ -57,7 +56,7 @@ document.querySelector('form').addEventListener('submit', function(event) {
         IsHospital: return_null(document.querySelector('#ishospital').value),
         City: return_null(document.querySelector('#city').value),
         Province: return_null(document.querySelector('#province').value),
-        RegionName: region,
+        RegionName: return_null(region),
         patient_age: return_null_int(document.querySelector('#pxage').value),
         patient_gender: return_null(document.querySelector('#pxgender').value),
         Location: island
@@ -67,21 +66,21 @@ document.querySelector('form').addEventListener('submit', function(event) {
 
     console.log(jsonData);
 
-    fetch('/create', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: jsonData,
-    })
-    .then(response => {
-        if (!response.data.status) {
-            alert('Error inserting')
-            throw new Error('Network response was not ok');
-        }
-        alert('Data inserted successfully')
-        return response.json();
-    });
+        fetch('/create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: jsonData,
+        })
+        .then(response => {
+            if (!response.data.status) {
+                alert('Error inserting')
+                throw new Error('Network response was not ok');
+            }
+            alert('Data inserted successfully')
+            return response.json();
+        });
     
     document.querySelector('form').reset();
 

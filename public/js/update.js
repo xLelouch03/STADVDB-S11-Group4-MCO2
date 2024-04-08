@@ -1,3 +1,5 @@
+const { json } = require("body-parser");
+
 var url = window.location.href;
 
 var parts = url.split('/');
@@ -49,4 +51,46 @@ fetch(`/get/${id}`)
   })
   .catch(error => {
     console.error('Error:', error);
-  });
+});
+
+const editButton = document.querySelector('.btn-dark');
+editButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    
+    
+    fetch(`/update/${id}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: jsonData
+    })
+    .then(response => {
+        if (!response.data.status) {
+            alert('Error inserting')
+            throw new Error('Network response was not ok');
+        }
+        alert('Data inserted successfully')
+        return response.json();
+    });
+});
+
+const deleteButton = document.querySelector('.btn-danger');
+deleteButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    
+    fetch(`/delete/${id}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => {
+        if (!response.data.status) {
+            alert('Error inserting')
+            throw new Error('Network response was not ok');
+        }
+        alert('Data inserted successfully')
+        return response.json();
+    });
+});
