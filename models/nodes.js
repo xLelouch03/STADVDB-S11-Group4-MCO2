@@ -116,16 +116,23 @@ const node_functions = {
         }
     },
 
+    // get the primary server
     async getPrimaryHost() {
-        try {
-            const [rows, fields] = await node1.query("SELECT MEMBER_HOST FROM performance_schema.replication_group_members WHERE MEMBER_ROLE = 'PRIMARY'");
-            const primaryHost = rows[0].MEMBER_HOST;
-            
-            return primaryHost;
-        } catch (error) {
-            console.error('Error getting primary host:', error);
-            return null;
+        const nodes = [node1, node2, node3]; 
+        
+        for (const node of nodes) {
+            try {
+                const [rows, fields] = await node.query("SELECT MEMBER_HOST FROM performance_schema.replication_group_members WHERE MEMBER_ROLE = 'PRIMARY'");
+                const primaryHost = rows[0].MEMBER_HOST;
+                return primaryHost;
+            } catch (error) {
+                // Continue to the next node if there's an error
+                continue;
+            }
         }
+        
+        // If all nodes fail, return null
+        return null;
     }
 };
 
