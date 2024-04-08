@@ -1,0 +1,169 @@
+
+<link rel="stylesheet" href="/static/css/create.css">
+
+<div class="top-container">
+    <div class="title-container">
+        <a href="/" class="home-btn">Home</a>
+        <h1>Create new Appointment</h1>
+    </div>
+</div>
+
+<div class="create-container">
+    <form>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">ApptID</span>
+            </div>
+            <input id="apptid" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
+        </div>
+
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="">PxID, ClinicID, & DoctorID</span>
+            </div>
+            <input type="text" class="form-control">
+            <input type="text" class="form-control">
+            <input type="text" class="form-control">
+        </div>
+
+        <div class="marg">
+            <div class="form-group row">
+                <div class="input-group col-md-4">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Status</span>
+                    </div>
+                    <select id="status" class="form-control">
+                        <option selected>Choose...</option>
+                        <option>Queued</option>
+                        <option>Serving</option>
+                        <option>No Show</option>
+                        <option>Complete</option>
+                        <option>Cancel</option>
+                        <option>Skip</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <div class="marg">
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Time Queued</span>
+                    </div>
+                    <input type="datetime-local" class="form-control" id="tq" name="datetime">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="marg">
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Queue Date</span>
+                    </div>
+                    <input type="datetime-local" class="form-control" id="qd" name="datetime">
+                </div>
+            </div>
+        </div>
+
+        <div class="marg">
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Start Time</span>
+                    </div>
+                    <input type="datetime-local" class="form-control" id="st" name="datetime">
+                </div>
+            </div>
+        </div>
+
+        <div class="marg">
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">End Time</span>
+                    </div>
+                    <input type="datetime-local" class="form-control" id="et" name="datetime">
+                </div>
+            </div>
+        </div>
+
+        <div class="marg">
+            <div class="form-group row">
+                <div class="input-group col-md-4">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="">Type & Virtual</span>
+                    </div>
+                    <select id="type" class="form-control">
+                        <option selected>Choose...</option>
+                        <option>Consultation</option>                        
+                    </select>
+                    <select id="virtual" class="form-control">
+                        <option selected>Choose...</option>
+                        <option>True</option>                        
+                        <option>False</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="marg">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="">Main Specialty & Hospital Name</span>
+                </div>
+                <input id="ms" type="text" class="form-control">
+                <input id="hn" type="text" class="form-control">
+            </div>
+        </div>
+        
+
+        <div class="marg">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="">Is Hospital, City, & Province</span>
+                </div>
+                <select id="ishospital" class="form-control">
+                        <option selected>Choose...</option>
+                        <option>True</option>                        
+                        <option>False</option>
+                </select>
+                <input id="city" type="text" class="form-control">
+                <input id="province" type="text" class="form-control">
+            </div>
+        </div>
+        
+        <div class="marg">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Region Name</span>
+                </div>
+                <input id="regionname" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+            </div>
+        </div>
+
+        <div class="marg marg-bot">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="">Patient Age & Patient Gender</span>
+                </div>
+                <input id="pxage" type="number" class="form-control">
+                <select id="pxgender" class="form-control">
+                        <option selected>Choose...</option>
+                        <option>Male</option>                        
+                        <option>Female</option>
+                </select>
+            </div>
+        </div>
+
+    <div class="marg-bot">
+        <button type="submit" class="btn btn-dark">Submit</button> 
+    </div> 
+
+    </form>
+</div>
+
+<script src="/static/js/create.js" defer></script>

@@ -39,6 +39,10 @@ const controller = {
     viewTable: async function (req,res){
         res.render('viewtable')
     },
+
+    create: async function (req,res){
+        res.render('create')
+    },
     
     getData: async function(req,res){
         node_functions.query_node(primaryNode, 'SELECT * FROM appointments')

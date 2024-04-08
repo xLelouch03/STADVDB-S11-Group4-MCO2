@@ -6,6 +6,7 @@ app.get('/', controller.renderInitial);
 app.get('/data', controller.getData);
 app.get ('/api/nodeStatus', controller.nodeStatus);
 app.get('/viewtable', controller.viewTable);
+app.get('/create', controller.create)
 
 
 // app.get('/devMenu', controller.getDevMenu);

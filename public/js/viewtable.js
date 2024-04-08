@@ -3,9 +3,9 @@ $(document).ready(function() {
         "ajax": "/data",
         "scrollX": true,
         "scrollY": '30vw',
-        "searching": true,
         "lengthMenu": [10, 100, 1000, 10000], 
         "columns": [
+            { "data": "id" },
             { "data": "pxid" },
             { "data": "clinicid" },
             { "data": "doctorid" },
@@ -33,4 +33,24 @@ $(document).ready(function() {
             { "data": "Location" }
         ]
     });
+
+    var typingTimer;
+    var doneTypingInterval = 1000; // 1 second
+
+    $('#example_filter input').keyup(function() {
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(performSearch, doneTypingInterval);
+    });
+
+    $('#example_filter input').keydown(function(event) {
+        if (event.keyCode === 13) {
+            clearTimeout(typingTimer);
+            performSearch();
+        }
+    });
+
+    function performSearch() {
+        var searchTerm = $('#example_filter input').val();
+        table.search(searchTerm).draw();
+    }
 });
