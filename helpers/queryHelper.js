@@ -72,7 +72,7 @@ const query_funcs = {
     },
 
     to_insert_query: function (pxid, clinicid, doctorid, apptid, status, TimeQueued, QueueDate,
-        StartTime, EndTime, type, IsVirtual, mainspecialty, hospitalname, IsHospital, City, Province, RegionName, patient_age, patient_gender, Location, type) {
+        StartTime, EndTime, type, IsVirtual, mainspecialty, hospitalname, IsHospital, City, Province, RegionName, patient_age, patient_gender, Location) {
         query = `INSERT INTO appointments (pxid, clinicid, doctorid, apptid, status, TimeQueued, QueueDate, StartTime, EndTime, type, IsVirtual, mainspecialty, hospitalname, IsHospital, City, Province, RegionName, patient_age, patient_gender, Location)`
         query = query + ` VALUES ( ` + pxid + ` , ` + clinicid + ` , ` + doctorid + ` , ` + apptid + ` , ` + status + ` , ` + TimeQueued + ` , ` + QueueDate + ` , ` + StartTime + ` , ` + EndTime + ` , ` + type + ` ,` + IsVirtual + `, ` + mainspecialty + ` , ` + hospitalname + ` ,` + IsHospital + `, ` + City + ` , ` + Province + ` , ` + RegionName + ` , ` + patient_age + `, ` + patient_gender + ` , ` + Location + ` );`
         return query
