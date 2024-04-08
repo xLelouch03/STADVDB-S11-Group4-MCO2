@@ -48,3 +48,13 @@ form {
 .full-width {
     width: 100%;
 }
+
+.marg-bot {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+
+.full-width-btn {
+    width: 100%;
+}

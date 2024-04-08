@@ -90,6 +90,33 @@ const node_functions = {
         }
     },
 
+    async query_node_with_params(node, query, params) {
+        let selectedNode;
+        switch (node) {
+            case 1:
+                selectedNode = node1;
+                break;
+            case 2:
+                selectedNode = node2;
+                break;
+            case 3:
+                selectedNode = node3;
+                break;
+            default:
+                console.log('Invalid node');
+                return null; // Return null to indicate failure
+        }
+        try {
+            const [rows, fields] = await selectedNode.query(query, params);
+            console.log(rows);
+            return rows;
+        } catch (error) {
+            console.error('Error querying node:', error);
+            return null; // Return null to indicate failure
+        }
+    },
+    
+
     // get single connection for transactions
     async get_single_connection(node) {
         let selectedNode;

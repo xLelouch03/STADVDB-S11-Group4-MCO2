@@ -63,6 +63,19 @@ const controller = {
         });
     },
 
+    getOne: async function(req, res) {
+        const id = req.params.id; // Access ID from URL params
+        node_functions.query_node_with_params(primaryNode, 'SELECT * FROM appointments WHERE id = ?', [id])
+            .then(results => {
+                res.json({ data: results });
+            })
+            .catch(error => {
+                console.error('Error querying MySQL:', error);
+                res.status(500).json({ error: 'Error querying MySQL' });
+            });
+    },
+    
+
     postCreate: async function(req,res){
        console.log("here");
     },
