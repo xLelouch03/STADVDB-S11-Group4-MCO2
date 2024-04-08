@@ -1,6 +1,20 @@
 document.querySelector('form').addEventListener('submit', function(event) {
     event.preventDefault(); 
     
+    let region = document.querySelector('#regionname').value;
+    let island
+
+    if(region == 'Region I' || region == 'Region II' || region == 'Region III' || region == 'Region IV-A' || region == 'Region IV-B' || region == 'Region V' || region == 'Region CAR' || region == 'NCR' || region == 'MIMAROPA') {
+        island = 'Luzon';
+    }
+    else if(region == 'Region VI' || region == 'Region VII' || region == 'Region VIII') {
+        island = 'Visayas';
+    }
+    else if(region == 'Region IX' || region == 'Region X' || region == 'Region XI' || region == 'Region XII' || region == 'Region XIII' || region == 'BARMM') {
+        island = 'Mindanao';
+    }
+    else island = '';
+    
     var formData = {
         pxid: document.querySelectorAll('.form-control')[1].value,
         clinicid: document.querySelectorAll('.form-control')[2].value,
@@ -18,9 +32,10 @@ document.querySelector('form').addEventListener('submit', function(event) {
         IsHospital: document.querySelector('#ishospital').value,
         City: document.querySelector('#city').value,
         Province: document.querySelector('#province').value,
-        RegionName: document.querySelector('#regionname').value,
+        RegionName: region,
         patient_age: document.querySelector('#pxage').value,
         patient_gender: document.querySelector('#pxgender').value,
+        Location: island
     };
 
     for (const key in formData) {
