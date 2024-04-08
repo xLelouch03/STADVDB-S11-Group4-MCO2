@@ -1,4 +1,5 @@
 const node_functions = require('../models/nodes');
+let primaryNode;
 const controller = {
     renderInitial: async function (req,res){
         res.render('index');
@@ -9,7 +10,25 @@ const controller = {
             const node1Connected = await node_functions.test_connection(1);
             const node2Connected = await node_functions.test_connection(2);
             const node3Connected = await node_functions.test_connection(3);
-    
+
+            // Get the current primary server's member host
+            const primaryHost = await node_functions.getPrimaryHost();
+
+            // Map the primary host to the corresponding node number
+            switch (primaryHost) {
+                case '10.2.0.144':
+                    primaryNode = 1;
+                    break;
+                case '10.2.0.145':
+                    primaryNode = 2;
+                    break;
+                case '10.2.0.146':
+                    primaryNode = 3;
+                    break;
+                default:
+                    primaryNode = null;
+                    break;
+            }    
             res.json({ node1Connected, node2Connected, node3Connected });
         } catch (error) {
             console.error('Error fetching node status:', error);
@@ -22,7 +41,7 @@ const controller = {
     },
     
     getData: async function(req,res){
-        node_functions.query_node(1, 'SELECT * FROM appointments')
+        node_functions.query_node(primaryNode, 'SELECT * FROM appointments')
         .then(results => {
             res.json({ data: results });
         })
