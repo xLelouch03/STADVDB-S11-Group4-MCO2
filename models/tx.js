@@ -1,5 +1,5 @@
-const nodes = require('./nodes');
-const {to_select_for_update} = require('../helpers/queryHelper');
+const nodes = require('./nodes.js');
+const {for_update} = require('../helpers/queryHelper.js');
 
 const tx_funcs = {
     // non updating transactions (select and insert)
@@ -47,7 +47,7 @@ const tx_funcs = {
                     await conn.beginTransaction();
 
                     // lock the row for updating
-                    await conn.query(to_select_for_update(id))
+                    await conn.query(for_update(id))
 
                     await conn.query('SET @@session.time_zone = "+08:00";')
 
@@ -76,3 +76,5 @@ const tx_funcs = {
         }
     },
 }
+
+module.exports = tx_funcs;
