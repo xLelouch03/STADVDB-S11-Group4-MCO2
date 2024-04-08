@@ -20,7 +20,8 @@ const db = {
         if(master) {
             let query = qh.to_insert_query(data.pxid, data.clinicid, data.doctorid, data.apptid, data.status, data.TimeQueued, data.QueueDate, data.StartTime, data.EndTime, data.type, data.IsVirtual, data.mainspecialty, data.hospitalname, data.IsHospital, data.City, data.Province, data.RegionName, data.patient_age, data.patient_gender, 'test')
             console.log(query)
-            let result = await tx.non_update_tx(master, query);
+            let query_log = qh.to_insert_query_log(data.pxid, data.clinicid, data.doctorid, data.apptid, data.status, data.TimeQueued, data.QueueDate, data.StartTime, data.EndTime, data.type, data.IsVirtual, data.mainspecialty, data.hospitalname, data.IsHospital, data.City, data.Province, data.RegionName, data.patient_age, data.patient_gender, 'test')
+            let result = await tx.insert_tx_with_log(master, query, query_log);
 
             return (result instanceof Error) ? result : true;
         }
