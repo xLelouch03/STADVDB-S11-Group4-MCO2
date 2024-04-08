@@ -5,6 +5,7 @@ const tx_funcs = {
     // non updating transactions (select and insert)
     async non_update_tx(active_node, query){
         try {
+            console.log('Connecting to node:', active_node);
             let conn = await nodes.get_single_connection(active_node);
 
             if(conn) {
@@ -75,7 +76,8 @@ const tx_funcs = {
           
         }
     },
-    insert_transaction_with_log: async function (primaryNode, insert_query, pxid, clinicid, doctorid, apptid, status, TimeQueued, QueueDate, 
+
+    insert_tx_with_log: async function (primaryNode, insert_query, pxid, clinicid, doctorid, apptid, status, TimeQueued, QueueDate, 
         StartTime, EndTime, type, IsVirtual, mainspecialty, hospitalname, IsHospital, City, Province, RegionName, patient_age, patient_gender, Location) {
         try {
             let conn = await nodes.connect_node(primaryNode); // PROBLEM: how does connection choose node
@@ -114,7 +116,8 @@ const tx_funcs = {
             return error;
         }
     },
-    insert_update_transaction_with_log: async function (primaryNode, query, update, pxid, clinicid, doctorid, apptid, status, TimeQueued, QueueDate, 
+
+    update_tx_with_log: async function (primaryNode, query, update, pxid, clinicid, doctorid, apptid, status, TimeQueued, QueueDate, 
         StartTime, EndTime, type, IsVirtual, mainspecialty, hospitalname, IsHospital, City, Province, RegionName, patient_age, patient_gender, Location) {
         try {
             let conn = await nodes.connect_node(primaryNode);

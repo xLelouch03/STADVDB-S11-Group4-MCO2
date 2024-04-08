@@ -1,4 +1,6 @@
 const node_functions = require('../models/nodes');
+const db = require('../models/db');
+
 let primaryNode;
 const controller = {
     renderInitial: async function (req,res){
@@ -63,8 +65,30 @@ const controller = {
         });
     },
 
-    postCreate: async function(req,res){
-       console.log("here");
+    postCreate: async function(req, res){
+        try {
+            console.log('in controller');
+            const result = await db.insert_query(req.body)
+            let data
+            if(result) {
+                data = {
+                    result: result,
+                    status: true,
+                    message: 'Data inserted successfully'
+                }
+            }
+            else {
+                data = {
+                    status: false,
+                    message: 'Error inserting data'
+                }
+            }
+            res.send(data);
+        }
+        catch (error) {
+                console.error('Error inserting data:', error);
+                res.status(500).json({ error: 'Error inserting data' });
+        }
     },
 }
 module.exports = controller;

@@ -12,6 +12,8 @@ async function fetchNodeStatus() {
         document.getElementById("node1Status").innerText = data.node1Connected ? "Online" : "Offline";
         document.getElementById("node2Status").innerText = data.node2Connected ? "Online" : "Offline";
         document.getElementById("node3Status").innerText = data.node3Connected ? "Online" : "Offline";
+
+        
     } catch (error) {
         console.error('Error fetching node status:', error);
     }

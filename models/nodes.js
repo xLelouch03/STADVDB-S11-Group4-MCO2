@@ -92,21 +92,22 @@ const node_functions = {
 
     // get single connection for transactions
     async get_single_connection(node) {
+        console.log(node)
         let selectedNode;
         switch (node) {
-            case 1:
+            case '10.2.0.144':
                 selectedNode = node1;
                 break;
-            case 2:
+            case '10.2.0.145':
                 selectedNode = node2;
                 break;
-            case 3:
+            case '10.2.0.146':
                 selectedNode = node3;
                 break;
             default:
-                console.log('Invalid node');
-                return;
-        }
+                primaryNode = null;
+                break;
+        } 
         try {
             return await selectedNode.getConnection();
         }
