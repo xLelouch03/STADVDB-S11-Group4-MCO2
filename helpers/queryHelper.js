@@ -66,12 +66,13 @@ const query_funcs = {
             query = query + ', mainspecialty = ' + mainspecialty;
         }
         
+        
 
         return query + ' WHERE id = ' + id + ';';
     },
 
     to_insert_query: function (pxid, clinicid, doctorid, apptid, status, TimeQueued, QueueDate, 
-    StartTime, EndTime, type, IsVirtual, mainspecialty, hospitalname, IsHospital, City, Province, RegionName, patient_age, patient_gender, Location) {
+    StartTime, EndTime, type, IsVirtual, mainspecialty, hospitalname, IsHospital, City, Province, RegionName, patient_age, patient_gender, Location, type) {
         query = `INSERT INTO appointments (pxid, clinicid, doctorid, apptid, status, TimeQueued, QueueDate, StartTime, EndTime, type, IsVirtual, mainspecialty, hospitalname, IsHospital, City, Province, RegionName, patient_age, patient_gender, Location)` 
         query = query + ` VALUES ('` + pxid + `','` + clinicid + `','` + doctorid + `','` + apptid + `','` + status + `','` + TimeQueued + `','` + QueueDate + `','` + StartTime+ `','` + EndTime+ `','` + type + `',` + IsVirtual + `,'` + mainspecialty+ `','` + hospitalname+ `',`  + IsHospital+ `,'` + City+ `','` + Province+ `','` + RegionName + `', ` + patient_age+ `,'` + patient_gender+ `','` + Location + `');`
         return query 
@@ -82,7 +83,7 @@ const query_funcs = {
     },
 
     to_insert_query_log_with_id: function (id, pxid, clinicid, doctorid, apptid, status, TimeQueued, QueueDate, 
-        StartTime, EndTime, type, IsVirtual, mainspecialty, hospitalname, IsHospital, City, Province, RegionName, patient_age, patient_gender, Location) {
+        StartTime, EndTime, type, IsVirtual, mainspecialty, hospitalname, IsHospital, City, Province, RegionName, patient_age, patient_gender, Location, type) {
         var query = 'INSERT INTO log_table(type, isDone, id, pxid, clinicid, doctorid, apptid, status, TimeQueued, QueueDate,';
             query = 'StartTime, EndTime, type, IsVirtual, mainspecialty, hospitalname, IsHospital, City, Province, RegionName, patient_age, patient_gender, Location) ';
 
@@ -94,8 +95,8 @@ const query_funcs = {
     },
     to_insert_query_log: function (pxid, clinicid, doctorid, apptid, status, TimeQueued, QueueDate, 
         StartTime, EndTime, type, IsVirtual, mainspecialty, hospitalname, IsHospital, City, Province, RegionName, patient_age, patient_gender, Location) {
-        var query = 'INSERT INTO log_table(type, isDone, id, pxid, clinicid, doctorid, apptid, status, TimeQueued, QueueDate,';
-            'StartTime, EndTime, type, IsVirtual, mainspecialty, hospitalname, IsHospital, City, Province, RegionName, patient_age, patient_gender, Location) ';
+        var query = 'INSERT INTO log_table(t_type, isDone, id, pxid, clinicid, doctorid, apptid, status, TimeQueued, QueueDate,';
+            query = query + 'StartTime, EndTime, type, IsVirtual, mainspecialty, hospitalname, IsHospital, City, Province, RegionName, patient_age, patient_gender, Location) ';
 
 
         query = query + `VALUES ('INSERT, false,'` + pxid + `','` + clinicid + `','` + doctorid + `','` + apptid + `','` + status + `','` + TimeQueued + `','` + QueueDate + `','` + StartTime+ `','` + EndTime+ `','` + type + `',` + IsVirtual + `,'` + mainspecialty+ `','` + hospitalname + `',`  + IsHospital+ `,'` + City+ `','` + Province+ `','` + RegionName + `',` + patient_age+ `,'` + patient_gender+ `','` + Location + `'`
@@ -107,7 +108,7 @@ const query_funcs = {
 
     to_update_query_log: function (pxid, clinicid, doctorid, apptid, status, TimeQueued, QueueDate, 
         StartTime, EndTime, type, IsVirtual, mainspecialty, hospitalname, IsHospital, City, Province, RegionName, patient_age, patient_gender, Location) {
-        var query = 'INSERT INTO log_table(type, isDone, id, pxid, clinicid, doctorid, apptid, status, TimeQueued, QueueDate, ';
+        var query = 'INSERT INTO log_table(t_type, isDone, id, pxid, clinicid, doctorid, apptid, status, TimeQueued, QueueDate, ';
         query = query + 'StartTime, EndTime, type, IsVirtual, mainspecialty, hospitalname, IsHospital, City, Province, RegionName, patient_age, patient_gender, Location) ';
 
         query = query + `VALUES ('UPDATE', false,'` + pxid + `','` + clinicid + `','` + doctorid + `','` + apptid + `','` + status + `','` + TimeQueued + `','` + QueueDate + `','` + StartTime+ `','` + EndTime+ `','` + type + `',` + IsVirtual + `,'` + mainspecialty+ `','` + hospitalname + `',`  + IsHospital+ `,'` + City+ `','` + Province+ `','` + RegionName + `',` + patient_age+ `,'` + patient_gender+ `','` + Location + `'`
@@ -118,7 +119,7 @@ const query_funcs = {
     },
     to_update_query_log_with_id: function (id, pxid, clinicid, doctorid, apptid, status, TimeQueued, QueueDate, 
         StartTime, EndTime, type, IsVirtual, mainspecialty, hospitalname, IsHospital, City, Province, RegionName, patient_age, patient_gender, Location) {
-        var query = 'INSERT INTO log_table(type, isDone, id, pxid, clinicid, doctorid, apptid, status, TimeQueued, QueueDate, ';
+        var query = 'INSERT INTO log_table(t_type, isDone, id, pxid, clinicid, doctorid, apptid, status, TimeQueued, QueueDate, ';
         query = query + 'StartTime, EndTime, type, IsVirtual, mainspecialty, hospitalname, IsHospital, City, Province, RegionName, patient_age, patient_gender, Location) ';
 
         query = query + `VALUES ('UPDATE', false, ` + id + `,'` + pxid + `','` + clinicid + `','` + doctorid + `','` + apptid + `','` + status + `','` + TimeQueued + `','` + QueueDate + `','` + StartTime+ `','` + EndTime+ `','` + type + `',` + IsVirtual + `,'` + mainspecialty+ `','` + hospitalname + `',`  + IsHospital+ `,'` + City+ `','` + Province+ `','` + RegionName + `',` + patient_age+ `,'` + patient_gender+ `','` + Location + `'`
@@ -128,7 +129,7 @@ const query_funcs = {
         return query;
     },
     to_delete_query_log: function (id) {
-        return 'INSERT INTO log_table(type, isDone, id) VALUES (`DELETE` , false, ' + id + ');';
+        return 'INSERT INTO log_table(t_type, isDone, id) VALUES (`DELETE` , false, ' + id + ');';
     },
     to_finish_log: function (id) {
         return 'UPDATE log_table SET isDone=1 WHERE logid=' + id + ';';
