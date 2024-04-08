@@ -103,6 +103,10 @@ const controller = {
         }
     },
 
+    postUpdate: async function(req, res){
+        console.log("aqui")
+    },
+
     delete: async function(req, res) {
         console.log("herea!!")
     }

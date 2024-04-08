@@ -66,22 +66,22 @@ document.querySelector('form').addEventListener('submit', function(event) {
 
     console.log(jsonData);
 
-        fetch('/create', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: jsonData,
-        })
-        .then(response => {
-            if (!response.data.status) {
-                alert('Error inserting')
-                throw new Error('Network response was not ok');
-            }
-            alert('Data inserted successfully')
-            return response.json();
-        });
-    
+    fetch('/create', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: jsonData,
+    })
+    .then(response => {
+        if (!response.data.status) {
+            alert('Error inserting')
+            throw new Error('Network response was not ok');
+        }
+        alert('Data inserted successfully')
+        return response.json();
+    });
+
     document.querySelector('form').reset();
 
 });
