@@ -5,6 +5,7 @@ const tx_funcs = {
     // non updating transactions (select and insert)
     async non_update_tx(active_node, query){
         try {
+            console.log('Connecting to node:', active_node);
             let conn = await nodes.get_single_connection(active_node);
 
             if(conn) {
@@ -75,22 +76,37 @@ const tx_funcs = {
           
         }
     },
-    insert_transaction_with_log: async function (primaryNode, insert_query, pxid, clinicid, doctorid, apptid, status, TimeQueued, QueueDate, 
-        StartTime, EndTime, type, IsVirtual, mainspecialty, hospitalname, IsHospital, City, Province, RegionName, patient_age, patient_gender, Location) {
+
+    async insert_tx_with_log(active_node, query, query_log) {
+        let primaryNode
+        switch (active_node) {
+            case '10.2.0.144':
+               primaryNode = 1;
+                break;
+            case '10.2.0.145':
+                primaryNode = 2;
+                break;
+            case '10.2.0.146':
+                primaryNode = 3;
+                break;
+            default:
+                primaryNode = null;
+                break;
+        } 
+
         try {
-            let conn = await nodes.connect_node(primaryNode); // PROBLEM: how does connection choose node
+            let conn = await nodes.get_single_connection(active_node);
+
             if (conn)
                 try {
                     await conn.beginTransaction();
 
                     await conn.query(`SET @@session.time_zone = "+08:00";`);
-                    var result = await conn.query(insert_query);
+                    let result = await conn.query(query);
                     console.log('Executed ' + query + ' at Node ' + primaryNode)
-                    // result[0].insertId should be the id of the appointment
-                    var log = queryHelper.to_insert_query_log_with_id(result[0].insertId, pxid, clinicid, doctorid, apptid, status, TimeQueued, QueueDate, 
-                        StartTime, EndTime, type, IsVirtual, mainspecialty, hospitalname, IsHospital, City, Province, RegionName, patient_age, patient_gender, Location);
-                    var resultlog = await conn.query(log);
-                    console.log('Created ' + log + ' at Node ' + primaryNode);
+
+                    let resultlog = await conn.query(query_log);
+                    console.log('Created ' + result + ' at Node ' + primaryNode);
 
                     console.log(resultlog);
                     await conn.commit();
@@ -100,7 +116,7 @@ const tx_funcs = {
                 catch (error) {
                     console.log(error)
                     console.log('Rolled back the data.');
-                    conn.rollback(node_to);
+                    conn.rollback();
                     conn.release();
                     return error;
                 }
@@ -114,7 +130,8 @@ const tx_funcs = {
             return error;
         }
     },
-    insert_update_transaction_with_log: async function (primaryNode, query, update, pxid, clinicid, doctorid, apptid, status, TimeQueued, QueueDate, 
+
+    update_tx_with_log: async function (primaryNode, query, update, pxid, clinicid, doctorid, apptid, status, TimeQueued, QueueDate, 
         StartTime, EndTime, type, IsVirtual, mainspecialty, hospitalname, IsHospital, City, Province, RegionName, patient_age, patient_gender, Location) {
         try {
             let conn = await nodes.connect_node(primaryNode);
@@ -142,7 +159,7 @@ const tx_funcs = {
                 catch (error) {
                     console.log(error)
                     console.log('Rolled back the data.');
-                    conn.rollback(node_to);
+                    conn.rollback();
                     conn.release();
                     return error;
                 }
