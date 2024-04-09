@@ -133,6 +133,10 @@ const query_funcs = {
     to_finish_log: function (id) {
         return 'UPDATE log_table SET isDone=1 WHERE logid=' + id + ';';
     },
+    to_retrieve_logs: function () {
+        return `SELECT * FROM log_table
+                WHERE isDone=false`
+    },
 
 }
 module.exports = query_funcs;

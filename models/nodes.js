@@ -37,6 +37,13 @@ const node3 = mysql.createPool({
 });
 
 const node_functions = {
+    connect_node: async function (node) {
+        switch (node) {
+            case 1: return await node1.getConnection();
+            case 2: return await node2.getConnection();
+            case 3: return await node3.getConnection();
+        }
+    },
     async test_connection(node){
         let selectedNode;
         switch (node) {
@@ -82,7 +89,7 @@ const node_functions = {
         }
         try {
             const [rows, fields] = await selectedNode.query(query)
-            console.log(rows);
+            // console.log(rows);
             return rows;
         } catch (error) {
             console.error('Error querying node:', error);
