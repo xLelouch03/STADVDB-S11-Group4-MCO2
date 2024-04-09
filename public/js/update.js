@@ -58,13 +58,13 @@ editButton.addEventListener('click', function(event) {
     let region = document.querySelector('#regionname').value;
     let island
 
-    if(region == 'Region I' || region == 'Region II' || region == 'Region III' || region == 'Region IV-A' || region == 'Region IV-B' || region == 'Region V' || region == 'Region CAR' || region == 'NCR' || region == 'MIMAROPA') {
+    if(region == 'Ilocos Region (I)' || region == 'Cagayan Valley (II)' || region == 'Central Luzon (III)' || region == 'CALABARZON (IV-A)' || region == 'MIMAROPA (IV-B)' || region == 'Bicol Region (V)' || region == 'Cordillera Administrative Region (CAR)' || region == 'National Capital Region (NCR)' || region == 'MIMAROPA') {
         island = 'Luzon';
     }
-    else if(region == 'Region VI' || region == 'Region VII' || region == 'Region VIII') {
+    else if(region == 'Western Visayas (VI)' || region == 'Central Visayas (VII)' || region == 'Eastern Visayas (VIII)') {
         island = 'Visayas';
     }
-    else if(region == 'Region IX' || region == 'Region X' || region == 'Region XI' || region == 'Region XII' || region == 'Region XIII' || region == 'BARMM') {
+    else if(region == 'Zamboanga Peninsula (IX)' || region == 'Northern Mindanao (X)' || region == 'Davao Region (XI)' || region == 'SOCCSKSARGEN (Cotabato Region) (XII)' || region == 'Caraga (XIII)' || region == 'Bangsamoro (BARMM)') {
         island = 'Mindanao';
     }
     else island = null;
@@ -128,7 +128,7 @@ editButton.addEventListener('click', function(event) {
         body: jsonData
     })
     .then(response => {
-        if (!response.data.status) {
+        if (!response.ok) {
             alert('Error updating')
             throw new Error('Network response was not ok');
         }
