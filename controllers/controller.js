@@ -131,7 +131,23 @@ const controller = {
 
     delete: async function(req, res) {
         try {
-
+            const result = await db.delete_query(req.params.id)
+            let data
+            if(result) {
+                data = {
+                    result: result,
+                    status: true,
+                    message: 'Data Deleted successfully'
+                }
+                res.status(200).send(data)
+            }
+            else {
+                data = {
+                    status: false,
+                    message: 'Error deleting data'
+                }
+                res.status(500).send(data)
+            }  
         }
         catch (error) {
             console.error('Error deleting data:', error);

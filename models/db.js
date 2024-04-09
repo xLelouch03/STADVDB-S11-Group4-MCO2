@@ -50,7 +50,18 @@ const db = {
     },
 
     async delete_query(id) { 
+        let master = await nodes.getPrimaryHost();
 
+        if(master) {
+            let query = 'DELETE FROM appointments WHERE id=' + id;
+            let query_log = qh.to_delete_query_log(id);
+            let result = await tx.update_tx_with_log(master, query, query_log, id);
+            return (result instanceof Error) ? false : true;
+        }
+        else {
+            console.log('Error performing query, no active nodes');
+            return false
+        }
     },
 
 }
