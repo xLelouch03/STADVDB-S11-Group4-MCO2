@@ -129,7 +129,13 @@ const controller = {
     },
 
     delete: async function(req, res) {
-        console.log("herea!!")
+        try {
+
+        }
+        catch (error) {
+            console.error('Error deleting data:', error);
+            res.status(500).json({ error: 'Error deleting data' });
+        }
     }
 }
 module.exports = controller;

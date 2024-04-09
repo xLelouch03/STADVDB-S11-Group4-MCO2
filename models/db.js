@@ -48,6 +48,10 @@ const db = {
         }
     },
 
+    async delete_query(id) { 
+
+    },
+
 }
 
 module.exports = db;
