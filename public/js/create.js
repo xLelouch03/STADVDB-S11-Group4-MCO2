@@ -73,8 +73,6 @@ document.querySelector('form').addEventListener('submit', function(event) {
         body: jsonData,
     })
     .then(response => {
-        console.log("hellooo")
-        console.log(response)
         if (!response.ok) {
             alert('Error creating appointment')
             throw new Error('Network response was not ok');
@@ -85,4 +83,15 @@ document.querySelector('form').addEventListener('submit', function(event) {
 
     document.querySelector('form').reset();
 
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('pxage').addEventListener('input', function() {
+        var inputVal = this.value;
+
+        if (inputVal < 0) {
+            this.value = '';
+        }
+
+    });
 });

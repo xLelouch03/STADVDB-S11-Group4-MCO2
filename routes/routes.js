@@ -13,6 +13,7 @@ app.get('/update/:id', controller.update)
 app.get('/get/:id', controller.getOne)
 app.post('/delete/:id', controller.delete)
 app.post('/update/:id', controller.postUpdate)
+app.post('/select', controller.validateSelect)
 
 
 // app.get('/devMenu', controller.getDevMenu);

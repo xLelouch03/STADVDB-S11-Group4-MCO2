@@ -50,6 +50,21 @@ const controller = {
         res.render('select')
     },
 
+    validateSelect: async function (req,res){
+        const id = req.body.id;
+        node_functions.query_node_with_params(primaryNode, 'SELECT * FROM appointments WHERE id = ?', [id])
+            .then(results => {
+                if (results.length === 0) {
+                    return res.status(404).json({ error: 'No appointments found with the provided ID' });
+                }
+                res.json({ data: results });
+            })
+            .catch(error => {
+                console.error('Error querying MySQL:', error);
+                res.status(500).json({ error: 'Error querying MySQL' });
+            });
+    },
+
     update: async function (req,res){
         res.render('update')
     },

@@ -163,3 +163,15 @@ deleteButton.addEventListener('click', function(event) {
         return response.json();
     });
 });
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('pxage').addEventListener('input', function() {
+        var inputVal = this.value;
+
+        if (inputVal < 0) {
+            this.value = '';
+        }
+
+    });
+});
