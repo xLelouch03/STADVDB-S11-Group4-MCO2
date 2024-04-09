@@ -45,21 +45,33 @@ test('Inserts value into database', async () => {
     expect(value_to_check[0][0].apptid).toBe('test');
 });
 
-describe('Case 1: Concurrent transactions in two or more nodes are reading the same data item.', async () => {
+test('Concurrent transactions in two or more nodes are reading the same data item', async () => {
         // Define the concurrent transactions to be tested
-        await db.insert_query;
+        await db.insert_query(data);
         const transaction1 = async () => {
             conn = await connectServer();
-            // Execute the first transaction
-            // For example, perform an insert operation
+            await conn.beginTransaction();
+            await conn.query(`SET @@session.time_zone = "+08:00";`);
+            result = await conn.query(`SELECT apptid FROM appointments WHERE hospitalname LIKE "Bawa Hospital";`);
+            await conn.query(`DO SLEEP(3);`);
+            await conn.commit();
+            await conn.release();
+            expect(result[0][0].apptid).toBe('test');
           };
       
           const transaction2 = async () => {
             conn = await connectServer();
-            
+            await conn.beginTransaction();
+            await conn.query(`SET @@session.time_zone = "+08:00";`);
+            result = await conn.query(`SELECT apptid FROM appointments WHERE hospitalname LIKE "Bawa Hospital";`);
+            await conn.commit();
+            await conn.release();
+            expect(result[0][0].apptid).toBe('test');
           };
       
           // Execute both transactions concurrently
           await Promise.all([transaction1(), transaction2()]);
+          conn_for_deleting = await connectServer();
+          await conn_for_deleting.query(`DELETE FROM appointments WHERE apptid LIKE 'test'`);
 });
 
