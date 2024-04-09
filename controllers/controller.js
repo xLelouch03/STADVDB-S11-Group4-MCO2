@@ -79,7 +79,6 @@ const controller = {
     
     postCreate: async function(req, res){
         try {
-            console.log('in controller');
             const result = await db.insert_query(req.body)
             let data
             if(result) {
@@ -104,7 +103,29 @@ const controller = {
     },
 
     postUpdate: async function(req, res){
-        console.log("aqui")
+        try {
+            const result = await db.update_query(req.body)
+            let data
+            if(result) {
+                data = {
+                    result: result,
+                    status: true,
+                    message: 'Data updated successfully'
+                }
+            }
+            else {
+                data = {
+                    status: false,
+                    message: 'Error updating data'
+                }
+            }
+            res.send(data);
+        
+        }
+        catch (error) {
+            console.error('Error updating data:', error);
+            res.status(500).json({ error: 'Error updating data' });
+        }
     },
 
     delete: async function(req, res) {

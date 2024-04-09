@@ -129,7 +129,7 @@ editButton.addEventListener('click', function(event) {
     })
     .then(response => {
         if (!response.data.status) {
-            alert('Error inserting')
+            alert('Error updating')
             throw new Error('Network response was not ok');
         }
         alert('Data inserted successfully')
@@ -151,7 +151,7 @@ deleteButton.addEventListener('click', function(event) {
     })
     .then(response => {
         if (!response.data.status) {
-            alert('Error inserting')
+            alert('Error deleting')
             throw new Error('Network response was not ok');
         }
         alert('Data inserted successfully')
