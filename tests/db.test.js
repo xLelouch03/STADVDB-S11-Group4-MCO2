@@ -1,9 +1,8 @@
 const db = require('../models/db');
 const nodes = require('../models/nodes.js');
 
-
 const data = {
-    id: 9999999999,
+    id: 999999999,
     pxid: null,
     clinicid: null,
     doctorid: null,
@@ -80,7 +79,7 @@ test('Concurrent transactions in two or more nodes are reading the same data ite
 test('At least one transaction in the three nodes is writing (update / delete) and the other concurrent transactions are reading the same data item.', async () => {
     // Define the concurrent transactions to be tested
     const data_updated = {
-        id: 9999999999,
+        id: 999999999,
         pxid: null,
         clinicid: null,
         doctorid: null,
@@ -104,15 +103,23 @@ test('At least one transaction in the three nodes is writing (update / delete) a
       }
     conn_for_deleting = await connectServer();
     await conn_for_deleting.query(`DELETE FROM appointments WHERE apptid LIKE 'test'`);
+    conn = await connectServer();
     await db.insert_query(data);
+
+    let result2 = await conn.query("SELECT id from appointments where apptid LIKE 'test'");
+
     const transaction1 = async () => {
+        conn.beginTransaction();
         conn.query("DO SLEEP(3)");
-        result = await conn.query(`SELECT hospitalname FROM appointments WHERE id = 9999999999`);
+        result = await conn.query(`SELECT hospitalname FROM appointments WHERE id = ${result2[0][0].id}`);
+        conn.commit();
+        conn.release();
+        console.log('test', result)
         expect(result[0][0].hospitalname).toBe('Rejano Hospital');
       };
   
       const transaction2 = async () => {
-        db.update_query(9999999999, data_updated);
+        db.update_query(data_updated, result2[0][0].id);
       };
   
       // Execute both transactions concurrently
