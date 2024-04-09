@@ -1,5 +1,5 @@
 const nodes = require('./nodes.js');
-const {for_update} = require('../helpers/queryHelper.js');
+const {for_update, to_finish_log} = require('../helpers/queryHelper.js');
 
 const tx_funcs = {
     // non updating transactions (select and insert)
@@ -108,7 +108,9 @@ const tx_funcs = {
                     let resultlog = await conn.query(query_log);
                     console.log('Created ' + result + ' at Node ' + primaryNode);
 
-                    console.log(resultlog);
+                    let logupdate = await conn.query(to_finish_log(resultlog[0].insertId))
+                    console.log('Update log at ' + resultlog[0].insertId)
+                    
                     await conn.commit();
                     await conn.release();
                     return result;
@@ -164,8 +166,8 @@ const tx_funcs = {
                     let resultlog = await conn.query(query_log);
                     console.log('Created ' + query_log + ' at Node ' + primaryNode);
 
-                    //var resultupdate = await nodes.query_node(primaryNode, update);
-                    //console.log('Executed ' + update);
+                    let logupdate = await conn.query(to_finish_log(resultlog[0].insertId))
+                    console.log('Update log at ' + resultlog[0].insertId)
 
                     await conn.commit();
                     await conn.release();
