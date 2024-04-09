@@ -8,17 +8,31 @@ document.addEventListener('DOMContentLoaded', function() {
 
     });
 
-    // Select the form using document.querySelector('form') or document.getElementsByTagName('form')[0]
     document.querySelector('form').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent form submission
+        event.preventDefault(); 
         
-        // Get the value of the id input field
         var id = document.getElementById('id').value;
 
-        // Construct the URL with the id parameter
         var url = "/update/" + id;
 
-        // Redirect the page to the constructed URL
-        window.location.href = url;
+        fetch('/select', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id: id })
+        })
+        .then(response => {
+            if (!response.ok) {
+                alert('There are no appointments with that ID')
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            window.location.href = url;
+        });
+
+        
     });
 });
