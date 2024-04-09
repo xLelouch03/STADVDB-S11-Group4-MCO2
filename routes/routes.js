@@ -15,14 +15,6 @@ app.post('/delete/:id', controller.delete)
 app.post('/update/:id', controller.postUpdate)
 app.post('/select', controller.validateSelect)
 
-
-// app.get('/devMenu', controller.getDevMenu);
-// app.post('/devMenu/select', controller.postQuerySelect);
-// app.post('/delete/:id/:year', controller.postDeleteMovie);
-// app.post('/add', controller.postInsertMovie);
-// app.put('/edit/:id', controller.postUpdateMovie);
-
-
 /* 404 route */
 // app.get('*', function(req, res) { res.render('error', {}); } );
 module.exports = app;
