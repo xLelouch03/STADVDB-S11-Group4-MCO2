@@ -52,17 +52,19 @@ const controller = {
 
     validateSelect: async function (req,res){
         const id = req.body.id;
-        node_functions.query_node_with_params(primaryNode, 'SELECT * FROM appointments WHERE id = ?', [id])
-            .then(results => {
-                if (results.length === 0) {
-                    return res.status(404).json({ error: 'No appointments found with the provided ID' });
-                }
-                res.json({ data: results });
-            })
-            .catch(error => {
-                console.error('Error querying MySQL:', error);
-                res.status(500).json({ error: 'Error querying MySQL' });
-            });
+        let query = 'SELECT * FROM appointments WHERE id = ' + id;
+
+        try {
+            const results = await db.standard_query(query);
+            if(results[0].length === 0) { 
+                return res.status(404).json({ error: 'No appointments found with the provided ID' });
+            }
+            res.json({ data: results[0] });
+        }
+        catch (error) {
+            console.error('Error querying MySQL:', error);
+            res.status(500).json({ error: 'Error querying MySQL' });
+        }
     },
 
     update: async function (req,res){
@@ -70,26 +72,30 @@ const controller = {
     },
 
     getData: async function(req,res){
-        node_functions.query_node(primaryNode, 'SELECT * FROM appointments')
-        .then(results => {
-            res.json({ data: results });
-        })
-        .catch(error => {
+        let query = 'SELECT * FROM appointments';
+
+        try {
+            const results = await db.standard_query(query);
+            res.json({ data: results[0] });
+        }
+        catch (error) {
             console.error('Error querying MySQL:', error);
             res.status(500).json({ error: 'Error querying MySQL' });
-        });
+        }
     },
 
     getOne: async function(req, res) {
         const id = req.params.id; // Access ID from URL params
-        node_functions.query_node_with_params(primaryNode, 'SELECT * FROM appointments WHERE id = ?', [id])
-            .then(results => {
-                res.json({ data: results });
-            })
-            .catch(error => {
-                console.error('Error querying MySQL:', error);
-                res.status(500).json({ error: 'Error querying MySQL' });
-            });
+        let query = 'SELECT * FROM appointments WHERE id = ' + id;
+
+        try {
+            const results = await db.standard_query(query);
+            res.json({ data: results[0] });
+        }
+        catch (error) {
+            console.error('Error querying MySQL:', error);
+            res.status(500).json({ error: 'Error querying MySQL' });
+        }
     },
     
     postCreate: async function(req, res){

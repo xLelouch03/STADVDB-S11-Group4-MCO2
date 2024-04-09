@@ -4,7 +4,7 @@ const qh = require('../helpers/queryHelper.js');
 
 const db = {
     async standard_query(query) {
-        let master = nodes.getPrimaryHost();
+        let master = await nodes.getPrimaryHost();
 
         if(master) {
             return await tx.non_update_tx(master, query);
