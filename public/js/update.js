@@ -130,14 +130,18 @@ editButton.addEventListener('click', function(event) {
     .then(response => {
         console.log(response);
         if (!response.ok) {
-            alert('Error updating')
+            alert('Error updating appointment')
             throw new Error('Network response was not ok');
         }
-        alert('Data inserted successfully')
+        alert('Appointment edited successfully')
         return response.json();
+    })
+    .then(data => {
+        window.location.href = '/';
+    })
+    .catch(error => {
+        console.error('Error:', error);
     });
-
-    document.querySelector('form').reset();
 });
 
 const deleteButton = document.querySelector('.btn-danger');

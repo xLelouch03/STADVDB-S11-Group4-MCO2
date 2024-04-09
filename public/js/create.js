@@ -76,10 +76,10 @@ document.querySelector('form').addEventListener('submit', function(event) {
         console.log("hellooo")
         console.log(response)
         if (!response.ok) {
-            alert('Error inserting')
+            alert('Error creating appointment')
             throw new Error('Network response was not ok');
         }
-        alert('Data inserted successfully')
+        alert('Appintment created successfully')
         return response.json();
     });
 
