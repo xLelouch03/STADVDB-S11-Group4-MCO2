@@ -15,6 +15,7 @@ const db = {
     },
 
     async insert_query(data) {
+        console.log(data)
         let master = await nodes.getPrimaryHost();
 
         if(master) {
