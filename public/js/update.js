@@ -113,7 +113,7 @@ editButton.addEventListener('click', function(event) {
         RegionName: return_null(region),
         patient_age: return_null_int(document.querySelector('#pxage').value),
         patient_gender: return_null(document.querySelector('#pxgender').value),
-        Location: island
+        Location: return_null(island)
     };
 
     var jsonData = JSON.stringify(formData);
@@ -128,6 +128,7 @@ editButton.addEventListener('click', function(event) {
         body: jsonData
     })
     .then(response => {
+        console.log(response);
         if (!response.ok) {
             alert('Error updating')
             throw new Error('Network response was not ok');

@@ -58,7 +58,7 @@ document.querySelector('form').addEventListener('submit', function(event) {
         RegionName: return_null(region),
         patient_age: return_null_int(document.querySelector('#pxage').value),
         patient_gender: return_null(document.querySelector('#pxgender').value),
-        Location: island
+        Location: return_null(island)
     };
 
     var jsonData = JSON.stringify(formData);
