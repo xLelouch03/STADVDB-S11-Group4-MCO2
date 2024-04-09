@@ -1,6 +1,5 @@
 const nodes = require('./nodes.js');
 const {for_update} = require('../helpers/queryHelper.js');
-const queryHelper = require('../helpers/queryHelper.js');
 
 const tx_funcs = {
     // non updating transactions (select and insert)
@@ -159,20 +158,6 @@ const tx_funcs = {
                     await conn.query(for_update(id))
 
                     await conn.query(`SET @@session.time_zone = "+08:00";`);
-<<<<<<< HEAD
-                    var result = await conn.query(query);
-                    console.log('Executed ' + query + ' at Node ' + primaryNode);
-
-                    var log = queryHelper.to_update_query_log_with_id(result[0].insertId, pxid, clinicid, doctorid, apptid, status, TimeQueued, QueueDate, 
-                        StartTime, EndTime, type, IsVirtual, mainspecialty, hospitalname, IsHospital, City, Province, RegionName, patient_age, patient_gender, Location);
-                    console.log(log)
-                    var resultlog = await conn.query(log);
-                    console.log('Created ' + log + ' at Node ' + primaryNode);
-                    
-                    console.log(resultlog)
-                    var resultupdate = await nodes.query_node(primaryNode, update);
-                    console.log('Executed ' + update);
-=======
                     let result = await conn.query(query);
                     console.log('Executed ' + query + ' at Node ' + primaryNode);
 
@@ -181,10 +166,9 @@ const tx_funcs = {
 
                     //var resultupdate = await nodes.query_node(primaryNode, update);
                     //console.log('Executed ' + update);
->>>>>>> 60ce4f3dd75a326621f54c37d378a871a47bd4c2
 
                     await conn.commit();
-                    conn.release();
+                    await conn.release();
                     return result;
                 }
                 catch (error) {

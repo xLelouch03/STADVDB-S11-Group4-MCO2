@@ -34,8 +34,6 @@ const sync_funcs = {
                 logs.sort((a, b) => a.log_timestamp.getTime() - b.log_timestamp.getTime());
                 
                 for (let i = 0; i < logs.length; i++) {
-                    let query;
-                    console.log(logs[i])
                     switch (logs[i].t_type) {
                         case 'INSERT':
                             const pxid = logs[i].pxid ? `'${logs[i].pxid}'` : null;
@@ -60,13 +58,11 @@ const sync_funcs = {
                             const location = logs[i].Location ? `'${logs[i].Location}'` : null;
 
                             const query = await queryHelper.to_insert_query(pxid, clinicid, doctorid, apptid, status, timeQueued, queueDate, startTime, endTime, type, isVirtual, mainSpecialty, hospitalName, isHospital, city, province, regionName, patientAge, patientGender, location);
-
-                            const finished_log = await queryHelper.to_finish_log(logs[i].logid);
-                            console.log("yes")
-                            const final_result = await tx.update_tx_with_log(selectedNode, query, finished_log, pxid, clinicid, doctorid, apptid, status, timeQueued, queueDate, startTime, endTime, type, isVirtual, mainSpecialty, hospitalName, isHospital, city, province, regionName, patientAge, patientGender, location);
-                            console.log("yes")
-
                             
+                            const finished_log = await queryHelper.to_finish_log(logs[i].logid);
+                            tx.non_update_tx(primary_node, finished_log)
+                            const final_result = await tx.non_update_tx(primary_node, query);
+
                         // case 'UPDATE':
                         //     query = queryHelper.to_update_query(logs[i].id + "," + "'" + logs[i].pxid + "'", "'" + logs[i].clinicid+"'", "'" + logs[i].doctorid+"'", "'" + logs[i].apptid+"'", "'" + logs[i].status+"'", "'" + new Date(logs[i].TimeQueued).toISOString().slice(0, 19).replace('T', ' ')+"'", "'" + new Date(logs[i].QueueDate).toISOString().slice(0, 19).replace('T', ' ')+"'", 
                         //     "'" + new Date(logs[i].StartTime).toISOString().slice(0, 19).replace('T', ' ')+"'", "'" + new Date(logs[i].EndTime).toISOString().slice(0, 19).replace('T', ' ')+"'", "'" + logs[i].type+"'", "'" + logs[i].IsVirtual+"'", "'" + logs[i].mainspecialty+"'", "'" + logs[i].hospitalname+"'", "'" + logs[i].IsHospital+"'", "'" + logs[i].City+"'", "'" + logs[i].Province+"'", "'" + logs[i].RegionName+"'", "'" + logs[i].patient_age+"'", "'" + logs[i].patient_gender+"'", "'" + logs[i].Location+"'");
@@ -81,7 +77,6 @@ const sync_funcs = {
                         //     var result = await transaction.make_2transaction(logs[i].node_to, query, update, 'DELETE', logs[i].id, logs[i].node_from);
                         //     return (result instanceof Error) ? false : true;
                     }
-                    console.log('Synced to Node 1');
                 }
             }
 
