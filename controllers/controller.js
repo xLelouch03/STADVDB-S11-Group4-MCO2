@@ -104,7 +104,7 @@ const controller = {
 
     postUpdate: async function(req, res){
         try {
-            const result = await db.update_query(req.body)
+            const result = await db.update_query(req.body, req.params.id)
             let data
             if(result) {
                 data = {
