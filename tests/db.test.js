@@ -3,7 +3,7 @@ const nodes = require('../models/nodes.js');
 
 
 const data = {
-    id: null,
+    id: 9999999999,
     pxid: null,
     clinicid: null,
     doctorid: null,
@@ -34,6 +34,7 @@ async function connectServer() {
     console.log("Connected");
     return conn;
 }
+
 test('Inserts value into database', async () => {
     conn = await connectServer();
     // await conn.query(`INSERT INTO appointments (apptid, hospitalname) VALUES ("test", "Bawa Hospital");`);
@@ -47,6 +48,8 @@ test('Inserts value into database', async () => {
 
 test('Concurrent transactions in two or more nodes are reading the same data item', async () => {
         // Define the concurrent transactions to be tested
+        conn_for_deleting = await connectServer();
+        await conn_for_deleting.query(`DELETE FROM appointments WHERE apptid LIKE 'test'`);
         await db.insert_query(data);
         const transaction1 = async () => {
             conn = await connectServer();
@@ -71,7 +74,49 @@ test('Concurrent transactions in two or more nodes are reading the same data ite
       
           // Execute both transactions concurrently
           await Promise.all([transaction1(), transaction2()]);
-          conn_for_deleting = await connectServer();
           await conn_for_deleting.query(`DELETE FROM appointments WHERE apptid LIKE 'test'`);
+});
+
+test('At least one transaction in the three nodes is writing (update / delete) and the other concurrent transactions are reading the same data item.', async () => {
+    // Define the concurrent transactions to be tested
+    const data_updated = {
+        id: 9999999999,
+        pxid: null,
+        clinicid: null,
+        doctorid: null,
+        apptid: "'test'",
+        status: null,
+        TimeQueued: null,
+        QueueDate: null,
+        StartTime: null,
+        EndTime: null,
+        type: null,
+        IsVirtual: null,
+        mainspecialty: null,
+        hospitalname: "'Rejano Hospital'",
+        IsHospital: null,
+        City: null,
+        Province: null,
+        RegionName: null,
+        patient_age: null,
+        patient_gender: null,
+        Location: null
+      }
+    conn_for_deleting = await connectServer();
+    await conn_for_deleting.query(`DELETE FROM appointments WHERE apptid LIKE 'test'`);
+    await db.insert_query(data);
+    const transaction1 = async () => {
+        conn.query("DO SLEEP(3)");
+        result = await conn.query(`SELECT hospitalname FROM appointments WHERE id = 9999999999`);
+        expect(result[0][0].hospitalname).toBe('Rejano Hospital');
+      };
+  
+      const transaction2 = async () => {
+        db.update_query(9999999999, data_updated);
+      };
+  
+      // Execute both transactions concurrently
+      await Promise.all([transaction1(), transaction2()]);
+      await conn_for_deleting.query(`DELETE FROM appointments WHERE apptid LIKE 'test'`);
 });
 
