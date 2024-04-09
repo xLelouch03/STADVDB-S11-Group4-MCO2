@@ -155,12 +155,18 @@ deleteButton.addEventListener('click', function(event) {
         }
     })
     .then(response => {
-        if (!response.data.status) {
+        if (!response.ok) {
             alert('Error deleting')
             throw new Error('Network response was not ok');
         }
-        alert('Data inserted successfully')
+        alert('Appointment deleted successfully')
         return response.json();
+    })
+    .then(data => {
+        window.location.href = '/';
+    })
+    .catch(error => {
+        console.error('Error:', error);
     });
 });
 
