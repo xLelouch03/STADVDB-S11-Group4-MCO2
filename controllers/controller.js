@@ -87,14 +87,15 @@ const controller = {
                     status: true,
                     message: 'Data inserted successfully'
                 }
+                res.status(200).send(data)
             }
             else {
                 data = {
                     status: false,
                     message: 'Error inserting data'
                 }
+                res.status(500).send(data)
             }
-            res.send(data);
         }
         catch (error) {
                 console.error('Error inserting data:', error);
@@ -104,7 +105,7 @@ const controller = {
 
     postUpdate: async function(req, res){
         try {
-            const result = await db.update_query(req.body)
+            const result = await db.update_query(req.body, req.params.id)
             let data
             if(result) {
                 data = {
@@ -112,15 +113,15 @@ const controller = {
                     status: true,
                     message: 'Data updated successfully'
                 }
+                res.status(200).send(data)
             }
             else {
                 data = {
                     status: false,
                     message: 'Error updating data'
                 }
-            }
-            res.send(data);
-        
+                res.status(500).send(data)
+            }        
         }
         catch (error) {
             console.error('Error updating data:', error);
@@ -129,7 +130,13 @@ const controller = {
     },
 
     delete: async function(req, res) {
-        console.log("herea!!")
+        try {
+
+        }
+        catch (error) {
+            console.error('Error deleting data:', error);
+            res.status(500).json({ error: 'Error deleting data' });
+        }
     }
 }
 module.exports = controller;

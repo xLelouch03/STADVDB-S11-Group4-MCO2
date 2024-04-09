@@ -132,15 +132,34 @@ const tx_funcs = {
         }
     },
 
-    update_tx_with_log: async function (primaryNode, query, update, pxid, clinicid, doctorid, apptid, status, TimeQueued, QueueDate, 
-        StartTime, EndTime, type, IsVirtual, mainspecialty, hospitalname, IsHospital, City, Province, RegionName, patient_age, patient_gender, Location) {
+    update_tx_with_log: async function (active_node, query, query_log, id) {
+        let primaryNode
+        switch (active_node) {
+            case '10.2.0.144':
+               primaryNode = 1;
+                break;
+            case '10.2.0.145':
+                primaryNode = 2;
+                break;
+            case '10.2.0.146':
+                primaryNode = 3;
+                break;
+            default:
+                primaryNode = null;
+                break;
+        } 
+        
         try {
-            let conn = await nodes.connect_node(primaryNode);
+            let conn = await nodes.get_single_connection(active_node);
             if (conn)
                 try {
                     await conn.beginTransaction();
 
+                    // lock the row for updating
+                    await conn.query(for_update(id))
+
                     await conn.query(`SET @@session.time_zone = "+08:00";`);
+<<<<<<< HEAD
                     var result = await conn.query(query);
                     console.log('Executed ' + query + ' at Node ' + primaryNode);
 
@@ -153,6 +172,16 @@ const tx_funcs = {
                     console.log(resultlog)
                     var resultupdate = await nodes.query_node(primaryNode, update);
                     console.log('Executed ' + update);
+=======
+                    let result = await conn.query(query);
+                    console.log('Executed ' + query + ' at Node ' + primaryNode);
+
+                    let resultlog = await conn.query(query_log);
+                    console.log('Created ' + query_log + ' at Node ' + primaryNode);
+
+                    //var resultupdate = await nodes.query_node(primaryNode, update);
+                    //console.log('Executed ' + update);
+>>>>>>> 60ce4f3dd75a326621f54c37d378a871a47bd4c2
 
                     await conn.commit();
                     conn.release();

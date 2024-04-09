@@ -24,7 +24,7 @@ const db = {
             let query_log = qh.to_insert_query_log(data.pxid, data.clinicid, data.doctorid, data.apptid, data.status, data.TimeQueued, data.QueueDate, data.StartTime, data.EndTime, data.type, data.IsVirtual, data.mainspecialty, data.hospitalname, data.IsHospital, data.City, data.Province, data.RegionName, data.patient_age, data.patient_gender, data.Location)
             let result = await tx.insert_tx_with_log(master, query, query_log);
 
-            return (result instanceof Error) ? result : true;
+            return (result instanceof Error) ? false : true;
         }
         else {
             console.log('Error performing query, no active nodes');
@@ -32,14 +32,24 @@ const db = {
         }
     },
 
-    async update_query() {
+    async update_query(data, id) {
         let master = await nodes.getPrimaryHost();
 
         if(master) {
+            let query = qh.to_update_query(id, data.pxid, data.clinicid, data.doctorid, data.apptid, data.status, data.TimeQueued, data.QueueDate, data.StartTime, data.EndTime, data.type, data.IsVirtual, data.mainspecialty, data.hospitalname, data.IsHospital, data.City, data.Province, data.RegionName, data.patient_age, data.patient_gender, data.Location)
+            console.log(query)
+            let query_log = qh.to_update_query_log_with_id(id, data.pxid, data.clinicid, data.doctorid, data.apptid, data.status, data.TimeQueued, data.QueueDate, data.StartTime, data.EndTime, data.type, data.IsVirtual, data.mainspecialty, data.hospitalname, data.IsHospital, data.City, data.Province, data.RegionName, data.patient_age, data.patient_gender, data.Location)
+            let result = await tx.update_tx_with_log(master, query, query_log, id); 
+            return (result instanceof Error) ? false : true;
         }
         else {
             console.log('Error performing query, no active nodes');
+            return false
         }
+    },
+
+    async delete_query(id) { 
+
     },
 
 }
