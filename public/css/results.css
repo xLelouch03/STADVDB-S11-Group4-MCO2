@@ -1,0 +1,38 @@
+.create-container {
+    width: 80%; 
+    margin: auto; 
+    margin-top: 40px;
+}
+
+.home-btn {
+    position: absolute;
+    top: 25%; 
+    left: 10%;
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+    background-color: #333; 
+    border-radius: 5px;
+}
+
+.top-container {
+    text-align: center;
+    position: relative;
+}
+
+.title-container {
+    background-color: #393737;
+    color: white;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+
+#subtext {
+    font-weight: 400;
+    font-size: 20px;
+}
+
+.marg {
+    margin-top: 30px;
+}

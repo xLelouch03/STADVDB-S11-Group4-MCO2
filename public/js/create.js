@@ -77,7 +77,7 @@ document.querySelector('form').addEventListener('submit', function(event) {
             alert('Error creating appointment')
             throw new Error('Network response was not ok');
         }
-        alert('Appintment created successfully')
+        alert('Appointment created successfully')
         return response.json();
     });
 

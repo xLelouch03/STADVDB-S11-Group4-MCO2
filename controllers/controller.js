@@ -50,6 +50,10 @@ const controller = {
         res.render('select')
     },
 
+    results: async function (req,res){
+        res.render('results')
+    },
+
     validateSelect: async function (req,res){
         const id = req.body.id;
         let query = 'SELECT * FROM appointments WHERE id = ' + id;
