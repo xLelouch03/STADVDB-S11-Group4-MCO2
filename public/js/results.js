@@ -6,13 +6,15 @@ fetch(`/getReport`)
     return response.json();
   })
   .then(data => {
-    console.log('JSON data:', data);
-    const dataArray = data[Object.keys(data)[0]]; 
-    console.log('First element of the array:', dataArray[0]);
+    const dataArray = data[Object.keys(data)[0]];
+
+    console.log(dataArray[0].total_appointments);
+    console.log(dataArray[1].total_appointments);
+    console.log(dataArray[2].total_appointments);
     
-    document.getElementById('luzon-appointments').value = dataArray[0].apptid;
-    document.getElementById('visayas-appointments').value = dataArray[0].apptid;
-    document.getElementById('mindanao-appointments').value = dataArray[0].apptid;
+    document.getElementById('luzon-appointments').textContent = dataArray[0].total_appointments;
+    document.getElementById('visayas-appointments').textContent = dataArray[1].total_appointments;
+    document.getElementById('mindanao-appointments').textContent = dataArray[2].total_appointments;
     
   })
   .catch(error => {

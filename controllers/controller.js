@@ -55,11 +55,10 @@ const controller = {
     },
 
     getReport: async function (req,res){
-        let query = 'SELECT COUNT(*) AS total_appointments FROM appointments GROUP BY Location;'
+        let query = 'SELECT Location, COUNT(*) AS total_appointments FROM appointments GROUP BY Location;'
 
         try {
             const results = await db.standard_query(query);
-            console.log(results[0]);
             res.json({ data: results[0] });
         }
         catch (error) {
