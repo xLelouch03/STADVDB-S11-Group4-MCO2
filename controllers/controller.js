@@ -55,7 +55,17 @@ const controller = {
     },
 
     getReport: async function (req,res){
-        console.log("here")
+        let query = 'SELECT COUNT(*) AS total_appointments FROM appointments GROUP BY Location;'
+
+        try {
+            const results = await db.standard_query(query);
+            console.log(results[0]);
+            res.json({ data: results[0] });
+        }
+        catch (error) {
+            console.error('Error querying MySQL:', error);
+            res.status(500).json({ error: 'Error querying MySQL' });
+        }
     },
 
     validateSelect: async function (req,res){
