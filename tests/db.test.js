@@ -75,7 +75,7 @@ test('Concurrent transactions in two or more nodes are reading the same data ite
   // Execute both transactions concurrently
   await Promise.all([transaction1(), transaction2()]);
   await conn_for_deleting.query(`DELETE FROM appointments WHERE apptid LIKE 'test'`);
-}, 10000);
+}, 100000);
 
 test('At least one transaction in the three nodes is writing (update / delete) and the other concurrent transactions are reading the same data item.', async () => {
   // Define the concurrent transactions to be tested

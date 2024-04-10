@@ -14,6 +14,7 @@ const tx_funcs = {
                     await conn.query('SET @@session.time_zone = "+08:00";')
 
                     let result = await conn.query(query);
+                    await conn.query(`DO SLEEP(3);`);
                     console.log('Transaction succesful:', result);
 
                     await conn.commit();
@@ -21,11 +22,28 @@ const tx_funcs = {
                     return result;
                 }
                 catch (error) {
-                    console.error('Error performing transaction:', error);
-                    console.log('Rolled back data');
-                    conn.rollback();
-                    conn.release();
-                    return error;
+                    try{
+                        console.log('Attempting to reconnect to the primary server');
+                        active_node = await nodes.getPrimaryHost();
+                        if(active_node) {
+                            console.log('Reconnected to the primary server');
+                        }
+                        conn = await nodes.get_single_connection(active_node);
+                        result = await conn.query(query);
+
+                        console.log('Transaction succesful:', result);
+
+                        await conn.commit();
+                        await conn.release();
+                        return result;
+                    }
+                    catch (error) {
+                        console.error('Error performing transaction:', error);
+                        console.log('Rolled back data');
+                        conn.rollback();
+                        conn.release();
+                        return error;
+                    }
                 }
             } 
             else {
@@ -53,6 +71,7 @@ const tx_funcs = {
                     await conn.query('SET @@session.time_zone = "+08:00";')
 
                     let result = await conn.query(query);
+                    await conn.query(`DO SLEEP(3);`);
                     console.log('Updated transaction:', result);
 
                     await conn.commit();
@@ -60,11 +79,28 @@ const tx_funcs = {
                     return result;
                 }
                 catch (error) {
-                    console.error('Error updating transaction:', error);
-                    console.log('Rolled back data');
-                    conn.rollback();
-                    conn.release();
-                    return error;
+                    try{
+                        console.log('Attempting to reconnect to the primary server');
+                        active_node = await nodes.getPrimaryHost();
+                        if(active_node) {
+                            console.log('Reconnected to the primary server');
+                        }
+                        conn = await nodes.get_single_connection(active_node);
+                        result = await conn.query(query);
+
+                        console.log('Transaction succesful:', result);
+
+                        await conn.commit();
+                        await conn.release();
+                        return result;
+                    }
+                    catch (error) {
+                        console.error('Error updating transaction:', error);
+                        console.log('Rolled back data');
+                        conn.rollback();
+                        conn.release();
+                        return error;
+                    }
                 }
             } 
             else {
@@ -105,6 +141,7 @@ const tx_funcs = {
                     let result = await conn.query(query);
                     console.log('Executed ' + query + ' at Node ' + primaryNode)
 
+                    await conn.query(`DO SLEEP(3);`);
                     let resultlog = await conn.query(query_log);
                     console.log('Created ' + result + ' at Node ' + primaryNode);
 
@@ -116,11 +153,31 @@ const tx_funcs = {
                     return result;
                 }
                 catch (error) {
-                    console.log(error)
-                    console.log('Rolled back the data.');
-                    conn.rollback();
-                    conn.release();
-                    return error;
+                    try{
+                        console.log('Attempting to reconnect to the primary server');
+                        active_node = await nodes.getPrimaryHost();
+                        if(active_node) {
+                            console.log('Reconnected to the primary server');
+                        }
+                        conn = await nodes.get_single_connection(active_node);
+                        result = await conn.query(query);
+
+                        console.log('Transaction succesful:', result);
+
+                        let logupdate = await conn.query(to_finish_log(resultlog[0].insertId))
+                        console.log('Update log at ' + resultlog[0].insertId)
+
+                        await conn.commit();
+                        await conn.release();
+                        return result;
+                    }
+                    catch (error) {
+                        console.error(error);
+                        console.log('Rolled back data');
+                        conn.rollback();
+                        conn.release();
+                        return error;
+                    }
                 }
             else {
                 console.log('Unable to connect!');
@@ -163,6 +220,8 @@ const tx_funcs = {
                     let result = await conn.query(query);
                     console.log('Executed ' + query + ' at Node ' + primaryNode);
 
+                    await conn.query(`DO SLEEP(3);`);
+
                     let resultlog = await conn.query(query_log);
                     console.log('Created ' + query_log + ' at Node ' + primaryNode);
 
@@ -174,11 +233,31 @@ const tx_funcs = {
                     return result;
                 }
                 catch (error) {
-                    console.log(error)
-                    console.log('Rolled back the data.');
-                    conn.rollback();
-                    conn.release();
-                    return error;
+                    try{
+                        console.log('Attempting to reconnect to the primary server');
+                        active_node = await nodes.getPrimaryHost();
+                        if(active_node) {
+                            console.log('Reconnected to the primary server');
+                        }
+                        conn = await nodes.get_single_connection(active_node);
+                        result = await conn.query(query);
+
+                        console.log('Transaction succesful:', result);
+
+                        let logupdate = await conn.query(to_finish_log(resultlog[0].insertId))
+                        console.log('Update log at ' + resultlog[0].insertId)
+
+                        await conn.commit();
+                        await conn.release();
+                        return result;
+                    }
+                    catch (error) {
+                        console.error(error);
+                        console.log('Rolled back data');
+                        conn.rollback();
+                        conn.release();
+                        return error;
+                    }
                 }
             else {
                 console.log('Unable to connect!');
