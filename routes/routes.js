@@ -15,6 +15,7 @@ app.post('/delete/:id', controller.delete)
 app.post('/update/:id', controller.postUpdate)
 app.post('/select', controller.validateSelect)
 app.get('/results', controller.results)
+app.get('/getReport', controller.getReport)
 
 /* 404 route */
 // app.get('*', function(req, res) { res.render('error', {}); } );
