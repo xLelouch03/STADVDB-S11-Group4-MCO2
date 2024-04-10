@@ -7,7 +7,7 @@ const node1 = mysql.createPool({
     database: 'mco2',
     port: 20144,
     waitForConnections: true,
-    connectionLimit: 10,
+    connectionLimit: 30,
     queueLimit: 0,
     connectTimeout: 5000
 });
@@ -19,7 +19,7 @@ const node2 = mysql.createPool({
     database: 'mco2',
     port: 20145,
     waitForConnections: true,
-    connectionLimit: 10,
+    connectionLimit: 30,
     queueLimit: 0,
     connectTimeout: 5000
 });
@@ -31,7 +31,7 @@ const node3 = mysql.createPool({
     database: 'mco2',
     port: 20146,
     waitForConnections: true,
-    connectionLimit: 10,
+    connectionLimit: 30,
     queueLimit: 0,
     connectTimeout: 5000
 });
