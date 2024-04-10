@@ -50,6 +50,23 @@ const controller = {
         res.render('select')
     },
 
+    results: async function (req,res){
+        res.render('results')
+    },
+
+    getReport: async function (req,res){
+        let query = 'SELECT Location, COUNT(*) AS total_appointments FROM appointments GROUP BY Location;'
+
+        try {
+            const results = await db.standard_query(query);
+            res.json({ data: results[0] });
+        }
+        catch (error) {
+            console.error('Error querying MySQL:', error);
+            res.status(500).json({ error: 'Error querying MySQL' });
+        }
+    },
+
     validateSelect: async function (req,res){
         const id = req.body.id;
         let query = 'SELECT * FROM appointments WHERE id = ' + id;
