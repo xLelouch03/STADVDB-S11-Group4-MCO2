@@ -43,7 +43,7 @@ test('Inserts value into database', async () => {
   console.log(value_to_check)
   await conn.query(`DELETE FROM appointments WHERE apptid LIKE 'test'`);
   expect(value_to_check[0][0].apptid).toBe('test');
-});
+}, 100000);
 
 test('Concurrent transactions in two or more nodes are reading the same data item', async () => {
   // Define the concurrent transactions to be tested
